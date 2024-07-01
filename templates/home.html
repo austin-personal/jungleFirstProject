@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+
+    <!-- JS -->
+    <!--Full version of the jquery & intergrity change-->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- 구글폰트 -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Stylish&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 텍스트형태로 되어있는 icon 을 쓸 수 있도록 Font awesome 을 포함하빈다. -->
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v6.4.0/js/all.js"
+    ></script>
+
+    <title>나홀로메모</title>
+
+    <!--Alone memo
+
+    내 자신의 기록을 위한 최적의 메모장 
+
+    -->
+
+    <!-- style -->
+    <style type="text/css">
+      * {
+        font-family: "Stylish", sans-serif;
+      }
+
+      .wrap {
+        width: 900px;
+        margin: 10px auto;
+      }
+
+      .horizontal-cards {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .card-title {
+        color: grey;
+        font-weight: 700;
+
+        background-color: light-grey;
+      }
+
+      .card-body {
+        height: 225px;
+        width: 275px;
+      }
+
+      .comment {
+        color: rgb(55, 53, 190);
+      }
+
+      .card-button {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card-button-in {
+        font-size: 15px;
+
+        height: 40px;
+        width: 50px;
+
+        text-align: center;
+
+        padding: 10px 5px;
+      }
+
+      .btn-size {
+        height: 40px;
+        width: 70px;
+        margin: 5px;
+      }
+
+      .button1 {
+        background-color: aqua;
+      }
+
+      .button2 {
+        background-color: red;
+      }
+
+      .button3 {
+        color: rgb(96, 185, 219);
+      }
+
+      #post-box {
+        width: 200px;
+        margin: 20px auto;
+        padding: 20px;
+        border: black solid;
+        border-radius: 5px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div>
+        <h1>
+            공독식사 참여 게시판
+        </h1>
+    </div>
+
+    <div class="card" >
+        <div class="card-body">
+            
+          <p class="card-title">포스트 제목</p>
+          <p class="card-text comment">참여 인원 제한</p>
+          <p class="card-likes">내용</p>
+        
+          <div class="card-button">
+              
+              <button type="button" class="btn btn-size button1 card-button-in edit-button" onclick="editMemo('${id}')">참여</button>
+              <button type="button" class="btn btn-size button2 card-button-in delete-button" onclick="deleteMemo('${id}')">나가기</button>
+            
+              <button type="button" class="btn btn-size button4 card-button-in save-button" onclick="updateMemo('${id}')" style="display: none;" >저장</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    <!-- #1 메모 저장을 위한 코드 -->
+    <script>
+        
+
+        $("#card-list").append(temp_html);
+      
+
+      // 1)Posting Memo API
+      function postMemo() {
+        // 1. 유저가 입력한 데이터를 #memo-title과 #memo-content에서 가져오기
+        let title = $("#memo-title").val(); //title     =  메모 제목
+        let comment = $("#memo-content").val(); //comment =  메모에 대한 코멘트
+
+        // 2. memo에 POST 방식으로 메모 생성 요청하기
+        $.ajax({
+          type: "POST", // POST 방식으로 요청
+          url: "/memos", // /articles라는 url에 요청
+          data: { title_give: title, comment_give: comment }, // 클라이언트가 요청한 데이터(title, comment)를 서버에 전달하는 변수 지정(title_give, comment_give)
+
+          success: function (response) {
+            if (response["result"] == "success") {
+              alert("포스팅 성공!");
+              window.location.reload(); // 3.성공 시 페이지 새로고침하기
+            } else {
+              alert("서버 오류!");
+            }
+          },
+        });
+      }
+
+      // 2)Showing memo API
+      function showMemos() {
+        $.ajax({
+          type: "GET",
+          url: "/memos",
+          data: { sortMode: sortMode },
+          success: function (response) {
+            console.log(response);
+            let memos = response["memos"]; //The response value is sent in a form of a dictionary and we are attempting to find the value of the key
+            for (let i = 0; i < memos.length; i++) {
+              console.log("Title of memo", i + 1, ":", memos[i]["title"]); // Log the comment for each memo
+
+              makeCard(
+                memos[i]["title"],
+                memos[i]["comment"],
+                memos[i]["likes"],
+                memos[i]["_id"]
+              ); //Through the data given in the form of a list of dictionaries(hence memos[i]["data"]), find all the necessary information to show as a card
+            }
+          },
+        });
+      }
+
+      // 3)Deleting memo API
+      function deleteMemo(id) {
+        if (confirm("메모를 정말로 삭제하시겠습니까?")) {
+          $.ajax({
+            type: "POST",
+            url: "/delete",
+            contentType: "application/json", // Set content type to JSON
+            data: JSON.stringify({ memoId: id }),
+            success: function (response) {
+              if (response.result === "success") {
+                alert(" 메모가 삭제됐습니다");
+                $(`#${id}`).remove();
+                window.location.reload(); // 성공 시 페이지 새로고침하기
+              } else {
+                alert("메모 삭제에 실패했습니다");
+              }
+            },
+          });
+        }
+      }
+
+      // 4)Number of likes memo API
+      function likeMemo(id) {
+        $.ajax({
+          type: "POST",
+          url: "/like",
+          contentType: "application/json", // Set content type to JSON
+          data: JSON.stringify({ memoId: id }),
+          success: function (response) {
+            if (response.result === "success") {
+              alert("좋아요가 눌렸습니다");
+              window.location.reload(); // 성공 시 페이지 새로고침하기
+            } else {
+              alert("좋아요 누르기에 실패했습니다");
+            }
+          },
+        });
+      }
+
+      // 5) Updating memo API
+
+      function editMemo(id) {
+        const card = $(`#${id}`);
+        card.find(".card-title").attr("contenteditable", "true");
+        card.find(".card-text").attr("contenteditable", "true");
+
+        card.find(".edit-button").hide();
+        card.find(".delete-button").hide();
+        card.find(".link-like").hide();
+
+        card.find(".save-button").show();
+      }
+
+      function updateMemo(id) {
+        const card = $(`#${id}`);
+        const title = card.find(".card-title").text();
+        const content = card.find(".card-text").text();
+        
+
+        $.ajax({
+          type: "POST",
+          url: "/update",
+          contentType: "application/json",
+          dataType: "json", // Ensure that data is sent and received as JSON
+          data: JSON.stringify({
+            memoId: id,
+            memoTitle: title,
+            memoContent: content,
+          }),
+          success: function (response) {
+            if (response.result === "success") {
+              alert("메모가 저장됐습니다");
+            } else {
+              alert("메모 저장이 실패했습니다");
+            }
+
+            card.find(".card-title").attr("contenteditable", "false");
+            card.find(".card-text").attr("contenteditable", "false");
+
+            card.find(".edit-button").show();
+            card.find(".delete-button").show();
+            card.find(".link-like").show();
+
+            card.find(".save-button").hide();
+          },
+        });
+      }
+
+    </script>
+    
+  </body>
+  
+</html>
