@@ -49,3 +49,17 @@
 - 컬러: 흰 초 검
 
 
+## Stack
+1. 프론트엔드
+- HTML
+- CSS
+- JQuery
+- AJax
+- Bootstrap
+
+2. 백엔드
+- Python
+- SSR
+- Jinja2
+- 경기도 음식점 API
+- MongoDB
