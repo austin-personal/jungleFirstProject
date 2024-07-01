@@ -28,7 +28,8 @@ def home():
 def get_restaurants():
     restaurants = list(res_collection.find({}, {'_id': 1, 'BIZPLC_NM': 1, 'REFINE_ROADNM_ADDR': 1}))
     return jsonify(restaurants)
-    print(restaurants)
+    a = jsonify(restaurants)
+    print(a)
 
 
 
