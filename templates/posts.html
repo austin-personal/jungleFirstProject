@@ -99,9 +99,9 @@
     <div class="wrap">
         <div class="Logo">
             <h1 class="Title">BOB Mate</h1>
-            <form>
+            <form action="/posts" method="post">
                 <label for="options">카테고리</label>
-                <select id="options" name="selected_option">
+                <select id="options" name="sort" value="all" onchange="this.form.submit()">
                     <option value="all">전체</option>
                     <option value="kor">한식</option>
                     <option value="jap">일식</option>
