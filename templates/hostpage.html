@@ -65,6 +65,11 @@
       .card{
         margin:20px;
       }
+    
+      .card-response{
+        margin:10px;
+      }
+
 
       .card-button {
         display: flex;
@@ -141,7 +146,15 @@
         width:425px;
       }
 
+      .decoration{
+        color:black;
+        text-decoration:none;
+      }
 
+      .decoration:hover{
+        color:black;
+        text-decoration:none;
+      }
 
     </style>
 
@@ -151,12 +164,17 @@
 
     <div class = "header">
         <div class = "Logo">
-          <a>
+          <a href = "bobList.html" class = "decoration">
             BOB Mate
           </a>
-  
+
         </div>
         
+        <div class="card-button">
+            <button type="button" class="btn btn-success" onclick="updatePost()">수정</button>
+            <button type="button" class="btn btn-danger" onclick = "">삭제</button>
+        </div>
+
         <hr class="LogoLine">
     </div>
 
@@ -165,7 +183,7 @@
         <div class="card-body">
           
           <div class = "card">
-            <a class="card-title tot-background">포스트 제목</a>
+            <a class="card-title tot-background decoration">포스트 제목</a>
           </div>
           
           <div class = "card">
@@ -197,17 +215,55 @@
           </div>
           
         
+          <div class = "row-data">
         
-          <div class="card-button">
-              
-              <button type="button" class="btn btn-success" onclick="showAlert()">수정</button>
-              <a href = "bobList.html">
-                <button type="button" class="btn btn-danger ">삭제</button>
-              </a>
-              
-          
+            <div class = "card card-response">
+              <div class = "reply-data reply-short">
+                ID
+              </div>
+            </div>
+            
+            <div class = "card card-response">
+              <div class = "reply-data reply-long">
+                댓글 내용
+              </div>
+            </div>
+            
           </div>
 
+          <div class = "row-data">
+        
+            <div class = "card card-response">
+              <div class = "reply-data reply-short">
+                ID
+              </div>
+            </div>
+            
+            <div class = "card card-response">
+              <div class = "reply-data reply-long">
+                댓글 내용
+              </div>
+            </div>
+            
+          </div>
+
+          <div class = "row-data">
+        
+            <div class = "card card-response">
+              <div class = "reply-data reply-short">
+                ID
+              </div>
+            </div>
+            
+            <div class = "card card-response">
+              <div class = "reply-data reply-long">
+                댓글 내용
+              </div>
+            </div>
+            
+          </div>
+
+        
         </div>
     </div>
 
@@ -218,9 +274,15 @@
   
 
   <script type = "text/javascript">
+    function updatePost(){
+
+    }
+    
     function showAlert(){
       alert('참여가 확정됐습니다!')
     }
+
+
 
   </script>
 
