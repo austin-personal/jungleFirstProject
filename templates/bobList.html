@@ -74,6 +74,9 @@
             right: 20px;
             z-index: 1000;
         }
+        .card {
+            margin-top: 20px;
+        }
 
         .card:hover {
             cursor: pointer;
@@ -106,7 +109,7 @@
         </div>
         <hr class="LogoLine">
 
-        <div id="post-box" class="form-post">
+        <div id="post-box" class="form-post" style="display:none">
             <div class="form-group">
                 <input id="post-url" placeholder="포스트 제목" class="form-control" placeholder="">
             </div>
@@ -165,10 +168,40 @@
             </div>
         </div>
         
-        <div id="cards-box" class="card-columns" style="display:none">
+        <div id="cards-box">
             <div class="card" onclick="handleCardClick()">
                 <div class="card-body">
-                    <a href="#" class="card-title">양식</a>
+                    <div class="Horizontal">
+                        <a href="#" class="card-title">양식</a>
+                        <h5 class="People">2/4</h5>
+                    </div>
+                    <p class="card-text">같이 식사해요</p>
+                </div>
+            </div>
+            <div class="card" onclick="handleCardClick()">
+                <div class="card-body">
+                    <div class="Horizontal">
+                        <a href="#" class="card-title">양식</a>
+                        <h5 class="People">2/4</h5>
+                    </div>
+                    <p class="card-text">같이 식사해요</p>
+                </div>
+            </div>
+            <div class="card" onclick="handleCardClick()">
+                <div class="card-body">
+                    <div class="Horizontal">
+                        <a href="#" class="card-title">양식</a>
+                        <h5 class="People">2/4</h5>
+                    </div>
+                    <p class="card-text">같이 식사해요</p>
+                </div>
+            </div>
+            <div class="card" onclick="handleCardClick()">
+                <div class="card-body">
+                    <div class="Horizontal">
+                        <a href="#" class="card-title">양식</a>
+                        <h5 class="People">2/4</h5>
+                    </div>
                     <p class="card-text">같이 식사해요</p>
                 </div>
             </div>
