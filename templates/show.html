@@ -196,8 +196,11 @@
         
           <div class="card-button">
               
-              <button type="button" class="btn btn-success" onclick="editMemo('${id}')">참여</button>
-              <button type="button" class="btn btn-danger " onclick="deleteMemo('${id}')">나가기</button>
+              <button type="button" class="btn btn-success" onclick="showAlert()">참여</button>
+              <a href = "bobList.html">
+                <button type="button" class="btn btn-danger ">나가기</button>
+              </a>
+              
           
           </div>
 
@@ -246,6 +249,15 @@
 
   </body>
   
+
+  <script type = "text/javascript">
+    function showAlert(){
+      alert('참여가 확정됐습니다!')
+    }
+
+  </script>
+
+
 </html>
 
 
