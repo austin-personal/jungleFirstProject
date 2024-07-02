@@ -54,36 +54,37 @@
     </script>
 </head>
 <body>
-    
-    <form action="/login" method="post">
-        <header>
-            <h1 class="Title">BOB Mate</h1>
-        </header>
+    <div class="wrap">
+        <form action="/login" method="post">
+            <header>
+                <h1 class="Title">BOB Mate</h1>
+            </header>
 
-        <div id="LoginBox">
-            <div>
-                <h2>로그인</h2>
+            <div id="LoginBox">
+                <div>
+                    <h2>로그인</h2>
+                </div>
+                <div>
+                    <input type="email" placeholder="E-Mail" class="form-control" id="LoginID" name="email">
+                </div>
+                <div>
+                    <input type="password" placeholder="PW" class="form-control" id="LoginPW" name="password">
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success form-control" >Login</button>
+                </div>
             </div>
-            <div>
-                <input type="email" placeholder="E-Mail" class="form-control" id="LoginID" name="email">
-            </div>
-            <div>
-                <input type="password" placeholder="PW" class="form-control" id="LoginPW" name="password">
-            </div>
-            <div>
-                <button type="submit" class="btn btn-success form-control" >Login</button>
-            </div>
-        </div>
-    </form>
-    <form action="/register" method="get">
-        <button type="submit" class="btn btn-link">회원가입</button>
-    </form>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <script>
-                alert("{{ messages[0] }}");
-            </script>
-        {% endif %}
-    {% endwith %}
+        </form>
+        <form action="/register" method="get">
+            <button type="submit" class="btn btn-link">회원가입</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <script>
+                    alert("{{ messages[0] }}");
+                </script>
+            {% endif %}
+        {% endwith %}
+    </div>
 </body>
 </html>

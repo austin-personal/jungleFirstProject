@@ -86,7 +86,7 @@ def get_posts():
             'id': str(post['_id']),
             'title': post['title'],
             'content': post['content'],
-            'author': post['author'],
+            'author_email': post['author_email'],
             'bobmate_cat': post.get('bobmate_cat'),
             'food_cat': post.get('food_cat'),
             'date': post.get('date'),
@@ -132,6 +132,7 @@ def post():
             post_id = posts_collection.insert_one({'title': title, 'content': content, 'author_email': author_email,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People  }).inserted_id
             return redirect(url_for('post_detail', post_id=post_id))
         else:
+            flash('로그인이 만료 되었습니다')
             return redirect(url_for('login'))
 
     return render_template('post.html')
