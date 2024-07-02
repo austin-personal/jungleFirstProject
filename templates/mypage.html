@@ -85,11 +85,21 @@
         height: 100%; /* Ensure card height adjusts to its content */
         }
 
-        .card-flex{
-        display: flex;
-        justify-content: space-between; /* Center content horizontally */
-        width:100%;
+        .card-flex {
+            display: flex;
+            flex-direction:row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
+
+        .card-flex div {
+            flex: 1;
+            text-align: center;
+            padding: 10px; /* Optional: Add padding to improve spacing */
+        }
+
+
 
       .card-button {
         display: flex;
@@ -177,6 +187,12 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .info-left{
+            margin-left:-10px;
+        }
+
+
+
 
     </style>
 
@@ -236,15 +252,19 @@
             </div>
 
             <div class = "card card-flex">
-                <div>
+                <div class = "info-left">
+                    제목
+                </div>
+
+                <div class = "info-middle">
                     날짜
                 </div>
 
-                <div>
+                <div class= "info-middle">
                     인원 / 제한
                 </div>
 
-                <div>
+                <div class = "info-right">
                     음식 종류
                 </div>
 
@@ -257,18 +277,25 @@
                 과거 참여 이력
             </div>
 
+            <div class = "card card-flex">
+                <div class = "info-left-past">
+                    1
+                </div>
 
-            <div class = "card">
-                <div class="tot-background">ID</div>
+                <div class = "info-middle">
+                    제목
+                </div>
+
+                <div class= "info-middle">
+                    날짜
+                </div>
+
+                <div class = "info-right">
+                    음식 종류
+                </div>
+
             </div>
 
-            <div class = "card">
-                <div class="tot-background">ID</div>
-            </div>
-
-            <div class = "card">
-                <div class="tot-background">ID</div>
-            </div>
 
         </div>   
           
