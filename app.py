@@ -80,7 +80,7 @@ def post():
         title = request.form['title']
         content = request.form['content']
         
-        bobmate_cat = request.form.get('selected_option')
+        bobmate_cat = request.form.get('bobmate_cat')
         food_cat = request.form.get('food_cat')
         date = request.form.get('date')
         time = request.form.get('time')

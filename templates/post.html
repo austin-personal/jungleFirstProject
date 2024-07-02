@@ -101,13 +101,15 @@
     <div class="wrap">
         <div class="Logo">
             <h1 class="Title">BOB Mate</h1>
-            <label for="options">카테고리</label>
-            <select id="options" name="selected_option">
-                <option value="option1">한식</option>
-                <option value="option2">일식</option>
-                <option value="option3">중식</option>
-                <option value="option3">양식</option>
-            </select>
+            <div>
+                <label for="options">카테고리</label>
+                <select id="options" name="selected_option">
+                    <option value="한식">한식</option>
+                    <option value="일식">일식</option>
+                    <option value="중식">중식</option>
+                    <option value="양식">양식</option>
+                </select>
+            </div>
         </div>
         <hr class="LogoLine">
 
@@ -119,18 +121,18 @@
                 </div>
                     
                 <label for="options">밥 메이트 유형</label>
-                <select id="options" name="selected_option bobmate_cat">
-                    <option value="option1">배달</option>
-                    <option value="option2">매장</option>
+                <select id="options" name="bobmate_cat">
+                    <option value="del">배달</option>
+                    <option value="shop">매장</option>
                 </select>
                 <h1></h1>
                 <div class="Horizontal">
                     <label for="options">음식 카테고리</label>
-                    <select id="options" name="selected_option food_cat">
-                        <option value="option1">한식</option>
-                        <option value="option2">일식</option>
-                        <option value="option3">중식</option>
-                        <option value="option3">양식</option>
+                    <select id="options" name="food_cat">
+                        <option value="kor">한식</option>
+                        <option value="jap">일식</option>
+                        <option value="chi">중식</option>
+                        <option value="ame">양식</option>
                     </select>
                     <input id="post-url" placeholder="최대 인원" name="max_People" class="form-control maxPeople" placeholder="">
 
@@ -160,9 +162,9 @@
 
                 <div class="Horizontal">
                     <form action="">
-                        <button type="submit" class="btn btn-danger" onclick="PostEnd()">취소</button>
+                        <button type="submit" class="btn btn-danger">취소</button>
                     </form>
-                    <button type="submit" class="btn btn-success" onclick="PostEnd()">등록</button>
+                    <button type="submit" class="btn btn-success">등록</button>
                 </div>
             </div>
         </form>
