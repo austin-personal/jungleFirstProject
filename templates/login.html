@@ -91,13 +91,23 @@
                 <h2>회원가입</h2>
             </div>
             <div>
-                <input type="email" placeholder="E-Mail" class="form-control" id="SigninID">
+                <input type="email" placeholder="E-Mail" class="form-control is-invalid" id="SigninID">
+                <div class="valid-feedback">
+                </div>
+                <div id="validationServer04Feedback"  class="invalid-feedback">
+                    입력하신 비밀번호와 일치하지 않습니다.
+                </div>
             </div>
             <div>
                 <input type="password" placeholder="PW" class="form-control" id="SigninPW">
             </div>
             <div>
-                <input type="password" placeholder="Confirm PW" class="form-control" id="SigninConfirmPW">
+                <input type="password" placeholder="Confirm PW" class="form-control is-invalid" id="SigninConfirmPW">
+                <div class="valid-feedback">
+                </div>
+                <div id="validationServer04Feedback"  class="invalid-feedback">
+                    입력하신 비밀번호와 일치하지 않습니다.
+                </div>
             </div>
             <div>
                 <input type="text" placeholder="Name" class="form-control" id="SigninName">
