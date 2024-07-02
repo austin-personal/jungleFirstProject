@@ -77,9 +77,21 @@ def logout():
 
 
 # 포스트 디비에서 가져오기
-@app.route('/posts', methods=['GET'])
+@app.route('/posts', methods=['GET', 'POST'])
 def get_posts():
-    posts = posts_collection.find()
+    if request.method == 'POST':
+        
+        sort = request.form.get('sort_food')
+        if sort == 'chi':
+            posts = posts_collection.find({'food_cat':'chi'})
+        elif sort == 'jap':
+            posts = posts_collection.find({'food_cat':'jap'})
+        elif sort == 'kor':
+            posts = posts_collection.find({'food_cat':'kor'})
+        elif sort == 'ame':
+            posts = posts_collection.find({'food_cat':'ame'})
+        elif sort == 'all':
+            posts = posts_collection.find({'food_cat':'all'})
     posts_data = []
     for post in posts:
         posts_data.append({
@@ -88,12 +100,13 @@ def get_posts():
             'content': post['content'],
             'author_email': post['author_email'],
             'bobmate_cat': post.get('bobmate_cat'),
-            'food_cat': post.get('food_cat'),
+            'food_cat': translate_food_cat(post.get('food_cat')),
             'date': post.get('date'),
             'time': post.get('time'),
             'open_chat': post.get('open_chat'),
             'max_People': post.get('max_People')
         })
+
     print(posts_data)
     return render_template('posts.html', posts_data=posts_data)
 
@@ -102,7 +115,8 @@ def get_posts():
 def post_detail(post_id):
     # Retrieve post data from MongoDB
     post = posts_collection.find_one({'_id': ObjectId(post_id)})
-    
+    post['food_cat'] = translate_food_cat(post.get('food_cat'))
+
     if not post:
         return 'Post not found', 404
     
@@ -234,6 +248,22 @@ def update_attendance(post_id):
         users_collection.update_one({'_id': user['_id']}, {'$pull': {'attending_events': post_id}})
 
     return redirect(url_for('post_detail', post_id=post_id))
+
+
+def translate_food_cat(food_cat):
+    if food_cat == 'chi':
+        return '중식'
+    elif food_cat == 'jap':
+        return '일식'
+    elif food_cat == 'kor':
+        return '한식'
+    elif food_cat == 'ame':
+        return '양식'
+    elif food_cat == 'all':
+        return '전체'
+
+
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5002, debug=True)
