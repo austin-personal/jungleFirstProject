@@ -171,54 +171,47 @@
 
 
     <div class="wrap">
-        <div class="card-body">
-          
-          <div class = "card">
-            <a class="card-title tot-background decoration">포스트 제목</a>
-          </div>
-          
-          <div class = "card">
-            <p class="card-text tot-background">밥 메이트 유형</p>
-          </div>
-          
-          <div class = "flex-info">
-            <div class = "card">
-              <p class="tot-background sub-background">음식 카테고리</p>
-            </div>
-
-            <div class = "card">
-              <p class="tot-background sub-background">최대 인원</p>
-            </div>
+      <div class="card-body">
+          <div class="card">
+              <a class="card-title tot-background decoration">{{ post.title }}</a>
           </div>
 
-          <div class = "flex-info">
-            <div class = "card">
-              <p class="tot-background sub-background">날짜</p>
-            </div>
-            
-            <div class = "card">
-            <p class="tot-background sub-background">시간</p>
-            </div>
+          <div class="card">
+              <p class="card-text tot-background">{{ post.bobmate_cat }}</p>
           </div>
 
-          <div class = "card">
-            <p class="tot-background-large">포스트 내용</p>
+          <div class="flex-info">
+              <div class="card">
+                  <p class="tot-background sub-background">{{ post.food_cat }}</p>
+              </div>
+
+              <div class="card">
+                  <p class="tot-background sub-background">{{ post.max_People }}</p>
+              </div>
           </div>
-          
-        
-        
+
+          <div class="flex-info">
+              <div class="card">
+                  <p class="tot-background sub-background">{{ post.date }}</p>
+              </div>
+
+              <div class="card">
+                  <p class="tot-background sub-background">{{ post.time }}</p>
+              </div>
+          </div>
+
+          <div class="card">
+              <p class="tot-background-large">{{ post.content }}</p>
+          </div>
+
           <div class="card-button">
-              
               <button type="button" class="btn btn-success" onclick="showAlert()">참여</button>
-              <a href = "bobList.html">
-                <button type="button" class="btn btn-danger ">나가기</button>
+              <a href="bobList.html">
+                  <button type="button" class="btn btn-danger">나가기</button>
               </a>
-              
-          
           </div>
-
-        </div>
-    </div>
+      </div>
+  </div>
 
 
 

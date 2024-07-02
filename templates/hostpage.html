@@ -39,8 +39,10 @@
       .header {
         display: flex;
         justify-content: space-between;
-    
-    }
+        border-bottom: thin solid black; /* Add a bottom border */
+        width: 100%;
+        }
+
       .wrap{
         display:flex;
         justify-content:center;
@@ -64,6 +66,7 @@
 
       .LogoLine {
             border: thin solid black;
+            width:auto;
         }
 
       .card{
@@ -80,10 +83,13 @@
         justify-content: space-evenly;
         align-items: center;
 
-        padding:10px;
-
-        
+        padding:10px; 
       }
+
+      .card-button-box {
+        margin-right:10px;
+      }
+
 
       .card-button-in {
         font-size: 15px;
@@ -173,9 +179,11 @@
           </a>
 
             <div class="card-button">
-                <div class = "card-button-box">
-                    <button type="button" class="btn btn-success" onclick="updatePost()">수정</button>
-                </div>
+                <a href = "update.html">
+                    <div class = "card-button-box">
+                        <button type="button" class="btn btn-success">수정</button>
+                    </div>
+                </a>
                 
                 <div class = "card-button-box">
                     <button type="button" class="btn btn-danger" onclick = "">삭제</button>
@@ -183,7 +191,6 @@
             </div>
         </div>
 
-        <hr class="LogoLine">
         
     </div>
 
