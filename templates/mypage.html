@@ -63,8 +63,14 @@
         }
 
       .card{
-        margin:20px;
-      }
+        margin: 10px;
+        padding: 0; /* Remove padding */
+        
+        display: flex;
+        justify-content: center; /* Center content horizontally */
+        align-items: center; /* Center content vertically */
+        height: 100%; /* Ensure card height adjusts to its content */
+        }
 
       .card-button {
         display: flex;
@@ -89,16 +95,22 @@
 
 
       .tot-background{
-        width:500px;
-        padding:10px;
+        width:100px;
+        padding:20px;
 
         border-radius:5px;
 
         text-align:center;
+
+        align-items:center;
       }
-      
-      .sub-background{
-        width:225px;
+
+      .short-info{
+        width:100px;
+      }
+
+      .long-info{
+        width:300px;
       }
 
       .flex-info{
@@ -107,36 +119,19 @@
       
       .row-data{
         display:flex;
-        
+        justify-content:center;
       }
 
-      .reply-data{
-        margin:5px;
+
+      .togeth-info{
+        padding:0;
+        height:300px;
       }
+
 
       hr{
         border-bottom:5px;
       }
-
-      .wrap-reply{
-        display:flex;
-        flex-direction:column;
-        
-        justify-content:space-evenly;
-        align-items:center;
-        
-        width:900px;
-        margin : 5px auto;
-      }
-
-      .reply-short{
-        width:50px;
-      }
-
-      .reply-long{
-        width:425px;
-      }
-
 
 
     </style>
@@ -148,7 +143,7 @@
     <div class = "header">
         <div class = "Logo">
           <a>
-            Bob Mate
+            Mypage
           </a>
   
         </div>
@@ -158,25 +153,42 @@
 
 
     <div class="wrap">
-        <div class="card-body">
-          
-          <div class = "card">
-            <a class="card-title tot-background">포스트 제목</a>
-          </div>
-          
-          <div class = "card">
-            <p class="card-text tot-background">밥 메이트 유형</p>
-          </div>
-          
-          <div class = "flex-info">
-            <div class = "card">
-              <p class="tot-background sub-background">음식 카테고리</p>
-            </div>
+        <div class="card-body">       
 
+        <div class = "flex-info">
             <div class = "card">
-              <p class="tot-background sub-background">최대 인원</p>
+                <div class="tot-background short-info">ID</div>
             </div>
-          </div>
+    
+            <div class = "card">
+                <div class="tot-background long-info">아이디</div>
+            </div>
+        </div>
+
+        <div class = "flex-info">
+            <div class = "card">
+                <div class="tot-background short-info">PW</div>
+            </div>
+    
+            <div class = "card">
+                <div class="tot-background long-info">비밀번호</div>
+            </div>
+        </div>
+          
+        <div class = "flex-info">
+            <div class = "card">
+                <div class="tot-background short-info">이름</div>
+            </div>
+    
+            <div class = "card">
+                <div class="tot-background long-info">OOO</div>
+            </div>
+        </div>
+
+        <div class = "card">
+           <div class="tot-background togeth-info">현재 참여하고 있는 공동 식사</div>
+        </div>
+          
 
           <div class = "flex-info">
             <div class = "card">
