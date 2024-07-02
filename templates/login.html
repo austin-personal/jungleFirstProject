@@ -73,10 +73,17 @@
             <div>
                 <button type="submit" class="btn btn-success form-control" >Login</button>
             </div>
-            <form action="/login" method="post">
-                <button type="submit" class="btn btn-link">회원가입</button>
-            </form>
         </div>
     </form>
+    <form action="/register" method="get">
+        <button type="submit" class="btn btn-link">회원가입</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+                alert("{{ messages[0] }}");
+            </script>
+        {% endif %}
+    {% endwith %}
 </body>
 </html>

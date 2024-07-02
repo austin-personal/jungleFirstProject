@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for, s
 from pymongo import MongoClient
 from bson import ObjectId
 import bcrypt
+from flask import flash
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -27,7 +28,8 @@ def register():
         existing_user = users_collection.find_one({'email': email})
 
         if existing_user:
-            return render_template('register.html', message='Email already exists, please choose another one')
+            flash('Email already exists, please choose another one')
+            return render_template('register.html')
 
         username = request.form['username']
         password = request.form['password'].encode('utf-8')
@@ -43,7 +45,7 @@ def register():
         users_collection.insert_one(user_data)
 
         session['email'] = email  # 회원가입 후 자동으로 로그인 처리
-        return redirect(url_for('home'))
+        return redirect(url_for('get_posts'))
 
     return render_template('register.html')
 
@@ -60,7 +62,8 @@ def login():
             session['email'] = email
             return redirect(url_for('get_posts'))
         else:
-            return render_template('login.html', message='Invalid email or password')
+            flash('Invalid email or password')
+            return render_template('login.html')
 
     return render_template('login.html')
 
@@ -94,6 +97,18 @@ def get_posts():
     print(posts_data)
     return render_template('posts.html', posts_data=posts_data)
 
+# 포스팅 상세 페이지
+@app.route('/post/<post_id>')
+def post_detail(post_id):
+    # Retrieve post data from MongoDB
+    post = posts_collection.find_one({'_id': ObjectId(post_id)})
+    
+    if not post:
+        return 'Post not found', 404
+    
+    # Pass post data to the template for rendering
+    return render_template('post_detail.html', post=post)
+
 
 # 포스팅 작성
 @app.route('/post', methods=['GET', 'POST'])
@@ -113,8 +128,8 @@ def post():
 
         if email:
             user = users_collection.find_one({'email': email})
-            author = user['username']
-            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author': author,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People  }).inserted_id
+            author_email = user['email']
+            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author_email': author_email,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People  }).inserted_id
             return redirect(url_for('post_detail', post_id=post_id))
         else:
             return redirect(url_for('login'))
@@ -163,7 +178,7 @@ def update_post(post_id):
         else:
             return render_template('error.html', message='Unauthorized access or post not found')
 
-    return redirect(url_for('home'))  # Redirect to home if not a POST request
+    return redirect(url_for('get_posts'))  # Redirect to home if not a POST request
 
 
 # 포스팅 삭제
@@ -192,14 +207,7 @@ def delete_post(post_id):
     return redirect(url_for('home'))  # Redirect to home if not a POST request
 
 
-# 포스팅 상세 페이지
-@app.route('/post/<post_id>')
-def post_detail(post_id):
-    post = posts_collection.find_one({'_id': ObjectId(post_id)})
-    if not post:
-        return 'Post not found', 404
 
-    return render_template('post_detail.html', post=post)
 
 # 사용자 참석 여부 업데이트
 @app.route('/post/<post_id>/attend', methods=['POST'])
