@@ -88,6 +88,29 @@
         function handleCardClick() {
             alert('카드가 클릭되었습니다!');
         }
+
+        
+        function PostStart() {
+            $('#cards-box').hide()
+            $('#post-box').show()
+        }
+        function PostEnd() {
+            $('#cards-box').show()
+            $('#post-box').hide()
+        }
+
+        function AddCard()
+        {
+            `<div class="card" onclick="handleCardClick({{id}})">
+                <div class="card-body">
+                    <div class="Horizontal">
+                        <a href="#" class="card-title">양식</a>
+                        <h5 class="People">2/4</h5>
+                    </div>
+                    <p class="card-text">같이 식사해요</p>
+                </div>
+            </div>`
+        }
     </script>
 </head>
 
@@ -109,8 +132,9 @@
         </div>
         <hr class="LogoLine">
 
-        <div id="post-box" class="form-post" style="display:none">
+        <div id="post-box" class="form-post">
             <div class="form-group">
+                <label for="post-url">포스트 제목</label>
                 <input id="post-url" placeholder="포스트 제목" class="form-control" placeholder="">
             </div>
                 
@@ -159,43 +183,17 @@
             </div>
             <div class="form-group">
                 <h2></h2>
+                <label for="post-comment">오픈 채팅방</label>
                 <input id="post-comment" placeholder="오픈 채팅방" class="form-control">
             </div>
 
             <div class="Horizontal">
-                <button type="button" class="btn btn-danger" onclick="postArticle()">취소</button>
-                <button type="button" class="btn btn-success" onclick="postArticle()">등록</button>
+                <button type="button" class="btn btn-danger" onclick="PostEnd()">취소</button>
+                <button type="button" class="btn btn-success" onclick="PostEnd()">등록</button>
             </div>
         </div>
         
-        <div id="cards-box">
-            <div class="card" onclick="handleCardClick()">
-                <div class="card-body">
-                    <div class="Horizontal">
-                        <a href="#" class="card-title">양식</a>
-                        <h5 class="People">2/4</h5>
-                    </div>
-                    <p class="card-text">같이 식사해요</p>
-                </div>
-            </div>
-            <div class="card" onclick="handleCardClick()">
-                <div class="card-body">
-                    <div class="Horizontal">
-                        <a href="#" class="card-title">양식</a>
-                        <h5 class="People">2/4</h5>
-                    </div>
-                    <p class="card-text">같이 식사해요</p>
-                </div>
-            </div>
-            <div class="card" onclick="handleCardClick()">
-                <div class="card-body">
-                    <div class="Horizontal">
-                        <a href="#" class="card-title">양식</a>
-                        <h5 class="People">2/4</h5>
-                    </div>
-                    <p class="card-text">같이 식사해요</p>
-                </div>
-            </div>
+        <div id="cards-box"  style="display:none">
             <div class="card" onclick="handleCardClick()">
                 <div class="card-body">
                     <div class="Horizontal">
@@ -206,7 +204,7 @@
                 </div>
             </div>
             <!-- Bottom right button -->
-            <button type="button" class="btn btn-primary fixed-button">우측하단 버튼</button>
+            <button type="button" onclick="PostStart()" class="btn btn-primary fixed-button">우측하단 버튼</button>
         </div>
     </div>
 
