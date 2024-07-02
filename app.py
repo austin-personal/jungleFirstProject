@@ -25,7 +25,7 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         existing_user = users_collection.find_one({'email': email})
-        print(email, username)
+
         if existing_user:
             return render_template('register.html', message='Email already exists, please choose another one')
 
@@ -45,7 +45,7 @@ def register():
         session['email'] = email  # 회원가입 후 자동으로 로그인 처리
         return redirect(url_for('home'))
 
-    return render_template('registerTest.html')
+    return render_template('register.html')
 
 # 로그인
 @app.route('/login', methods=['GET', 'POST'])
@@ -53,12 +53,12 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password'].encode('utf-8')
-
+        print(email, password)
         user = users_collection.find_one({'email': email})
 
         if user and bcrypt.checkpw(password, user['password']):
             session['email'] = email
-            return redirect(url_for('home'))
+            return redirect(url_for('get_posts'))
         else:
             return render_template('login.html', message='Invalid email or password')
 
@@ -69,7 +69,31 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('home')) 
-    # 리다이렉트를 로그인 페이지로?????? 해야하지 않나????
+ 
+
+
+
+# 포스트 디비에서 가져오기
+@app.route('/posts', methods=['GET'])
+def get_posts():
+    posts = posts_collection.find()
+    posts_data = []
+    for post in posts:
+        posts_data.append({
+            'id': str(post['_id']),
+            'title': post['title'],
+            'content': post['content'],
+            'author': post['author'],
+            'bobmate_cat': post.get('bobmate_cat'),
+            'food_cat': post.get('food_cat'),
+            'date': post.get('date'),
+            'time': post.get('time'),
+            'open_chat': post.get('open_chat'),
+            'max_People': post.get('max_People')
+        })
+    print(posts_data)
+    return render_template('posts.html', posts_data=posts_data)
+
 
 # 포스팅 작성
 @app.route('/post', methods=['GET', 'POST'])
@@ -80,15 +104,12 @@ def post():
         title = request.form['title']
         content = request.form['content']
         
-        bobmate_cat = request.form.get('selected_option')
+        bobmate_cat = request.form.get('bobmate_cat')
         food_cat = request.form.get('food_cat')
         date = request.form.get('date')
         time = request.form.get('time')
         open_chat = request.form.get('open_chat')
         max_People = request.form.get('max_People')
-        print("=" * 100)
-        print("{} {} {} {} {} {} {} {} {}".format(email, title, content, bobmate_cat, food_cat, date, time, open_chat, max_People))
-        print("=" * 100)
 
         if email:
             user = users_collection.find_one({'email': email})
