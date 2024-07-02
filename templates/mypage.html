@@ -58,8 +58,21 @@
             width:100%
         }
 
-      .LogoLine {
-            border: thin solid black;
+        .LogoLine {
+                border: thin solid black;
+        }
+
+        .Logo a {
+            color: black;
+            text-decoration: none; /* This removes the underline from the link */
+        }
+        .Logo a:hover {
+            color: black; /* This ensures the color stays black on hover */
+        }
+
+        .body-title{
+            font-weight:700;
+            padding-bottom:20px;
         }
 
       .card{
@@ -70,6 +83,12 @@
         justify-content: center; /* Center content horizontally */
         align-items: center; /* Center content vertically */
         height: 100%; /* Ensure card height adjusts to its content */
+        }
+
+        .card-flex{
+        display: flex;
+        justify-content: space-between; /* Center content horizontally */
+        width:100%;
         }
 
       .card-button {
@@ -116,15 +135,33 @@
       .flex-info{
         display:flex;
       }
+
+      .flex-info-col{
+        display:flex;
+        flex-direction: column;
+      }
       
       .row-data{
         display:flex;
         justify-content:center;
+        
       }
 
+      .info{
+        color:grey;
+
+        margin-top:30px;
+        margin-left:10px;
+        font-weight:700;
+      }
+
+      .info-def{
+        color:grey;
+        font-weight:700;
+      }
 
       .togeth-info{
-        padding:0;
+        
         height:150px;
       }
 
@@ -132,6 +169,13 @@
       hr{
         border-bottom:5px;
       }
+
+      .border-container {
+        border: 1px solid black;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
 
     </style>
@@ -142,8 +186,8 @@
 
     <div class = "header">
         <div class = "Logo">
-          <a>
-            Mypage
+          <a href = "bobList.html">
+            Bob Mate
           </a>
   
         </div>
@@ -153,56 +197,83 @@
 
 
     <div class="wrap">
-        <div class="card-body">       
-
-        <div class = "flex-info">
-            <div class = "card">
-                <div class="tot-background short-info">ID</div>
-            </div>
-    
-            <div class = "card">
-                <div class="tot-background long-info">아이디</div>
-            </div>
+        <div class="info-body">       
+        <div class = "body-title">
+            마이페이지
         </div>
 
-        <div class = "flex-info">
-            <div class = "card">
-                <div class="tot-background short-info">PW</div>
+        <div class = "border-container">
+            <div class = "info-def">
+                기본정보
             </div>
-    
-            <div class = "card">
-                <div class="tot-background long-info">비밀번호</div>
-            </div>
-        </div>
-          
-        <div class = "flex-info">
-            <div class = "card">
-                <div class="tot-background short-info">이름</div>
-            </div>
-    
-            <div class = "card">
-                <div class="tot-background long-info">OOO</div>
-            </div>
-        </div>
 
-        <div class = "card">
-           <div class="tot-background togeth-info">현재 참여하고 있는 공동 식사</div>
-        </div>
-          
-
+            <div class = "flex-info">
+                <div class = "card">
+                    <div class="tot-background short-info">ID</div>
+                </div>
         
-          
-        
-        
-          <div class="card-button">
+                <div class = "card">
+                    <div class="tot-background long-info">아이디</div>
+                </div>
+            </div>
               
-              <button type="button" class="btn btn-success" onclick="showAlert()">참여</button>
-              <a href = "bobList.html">
-                <button type="button" class="btn btn-danger ">나가기</button>
-              </a>
-              
+            <div class = "flex-info">
+                <div class = "card">
+                    <div class="tot-background short-info">이름</div>
+                </div>
+        
+                <div class = "card">
+                    <div class="tot-background long-info">OOO</div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class = "flex-info-col">
+            <div class = "info">
+                현재 참여하고 있는 공동 식사
+            </div>
+
+            <div class = "card card-flex">
+                <div>
+                    날짜
+                </div>
+
+                <div>
+                    인원 / 제한
+                </div>
+
+                <div>
+                    음식 종류
+                </div>
+
+            </div>
+        </div>    
+
+        
+        <div class = "flex-info-col">
+            <div class = "info">
+                과거 참여 이력
+            </div>
+
+
+            <div class = "card">
+                <div class="tot-background">ID</div>
+            </div>
+
+            <div class = "card">
+                <div class="tot-background">ID</div>
+            </div>
+
+            <div class = "card">
+                <div class="tot-background">ID</div>
+            </div>
+
+        </div>   
           
-          </div>
+        
+
 
         </div>
     </div>
