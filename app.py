@@ -193,9 +193,10 @@ def delete_post(post_id):
 
 
 # 포스팅 상세 페이지
-@app.route('/post/<post_id>')
+@app.route('/post/<post_id>', methods=['POST'])
 def post_detail(post_id):
     post = posts_collection.find_one({'_id': ObjectId(post_id)})
+    print(post)
     if not post:
         return 'Post not found', 404
 
