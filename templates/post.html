@@ -31,10 +31,12 @@
         .Logo {
             padding-top: 10px;
             padding-left: 10px;
-            font-size: 30px;
             display: flex;
             justify-content: space-between;
             width: 100%;
+        }
+        .Title {
+            font-size: 30px;
         }
         .Horizontal{
             width: auto;
@@ -53,6 +55,10 @@
             width: auto;
             height: auto;
             margin: auto;
+        }
+        
+        .maxPeople {
+            width: 100px;
         }
 
         .comment {
@@ -84,32 +90,9 @@
     </style>
     
 
-    <script>
+    <script> 
         function handleCardClick() {
             alert('카드가 클릭되었습니다!');
-        }
-
-        
-        function PostStart() {
-            $('#cards-box').hide()
-            $('#post-box').show()
-        }
-        function PostEnd() {
-            $('#cards-box').show()
-            $('#post-box').hide()
-        }
-
-        function AddCard()
-        {
-            `<div class="card" onclick="handleCardClick({{id}})">
-                <div class="card-body">
-                    <div class="Horizontal">
-                        <a href="#" class="card-title">양식</a>
-                        <h5 class="People">2/4</h5>
-                    </div>
-                    <p class="card-text">같이 식사해요</p>
-                </div>
-            </div>`
         }
     </script>
 </head>
@@ -117,82 +100,72 @@
 <body>
     <div class="wrap">
         <div class="Logo">
-            <a>BOB Mate</a>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">한식</a>
-                    <a class="dropdown-item" href="#">일식</a>
-                    <a class="dropdown-item" href="#">양식</a>
-                    <a class="dropdown-item" href="#">중식</a>
-                </div>
-            </div>
+            <h1 class="Title">BOB Mate</h1>
+            <label for="options">카테고리</label>
+            <select id="options" name="selected_option">
+                <option value="option1">한식</option>
+                <option value="option2">일식</option>
+                <option value="option3">중식</option>
+                <option value="option3">양식</option>
+            </select>
         </div>
         <hr class="LogoLine">
 
-        <div id="post-box" class="form-post">
-            <div class="form-group">
-                <label for="post-url">포스트 제목</label>
-                <input id="post-url" placeholder="포스트 제목" class="form-control" name="title" placeholder="">
-            </div>
-                
-            <div class="dropdown FullWidth">
-                <button class="btn btn-secondary dropdown-toggle FullWidth" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    밥 메이트 유형
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">배달</a>
-                    <a class="dropdown-item" href="#">매장 식사</a>
+        <form action="/post" method="post">
+            <div id="post-box" class="form-post">
+                <div class="form-group">
+                    <label for="post-url">포스트 제목</label>
+                    <input id="post-url" placeholder="포스트 제목" class="form-control" name="title" placeholder="">
                 </div>
-            </div>
-            <h1></h1>
-            <div class="Horizontal">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        음식 카테고리
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">한식</a>
-                        <a class="dropdown-item" href="#">일식</a>
-                        <a class="dropdown-item" href="#">양식</a>
-                        <a class="dropdown-item" href="#">중식</a>
+                    
+                <label for="options">밥 메이트 유형</label>
+                <select id="options" name="selected_option bobmate_cat">
+                    <option value="option1">배달</option>
+                    <option value="option2">매장</option>
+                </select>
+                <h1></h1>
+                <div class="Horizontal">
+                    <label for="options">음식 카테고리</label>
+                    <select id="options" name="selected_option food_cat">
+                        <option value="option1">한식</option>
+                        <option value="option2">일식</option>
+                        <option value="option3">중식</option>
+                        <option value="option3">양식</option>
+                    </select>
+                    <input id="post-url" placeholder="최대 인원" name="max_People" class="form-control maxPeople" placeholder="">
+
+                </div>
+                <h1></h1>
+                <div class="Horizontal">
+
+                    <div class="form-group">
+                        <label for="dateInput">날짜</label>
+                        <input type="date" class="form-control" id="dateInput" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="timeInput">시간</label>
+                        <input type="time" class="form-control" id="timeInput" name="time">
                     </div>
                 </div>
-                <input id="post-url" placeholder="최대 인원" class="form-control" placeholder="">
-            </div>
-            <h1></h1>
-            <div class="Horizontal">
-
                 <div class="form-group">
-                    <label for="dateInput">날짜</label>
-                    <input type="date" class="form-control" id="dateInput" name="dateInput">
+                    <h2></h2>
+                    <label for="post-comment">포스트 내용</label>
+                    <textarea id="post-comment" class="form-control" name="content" rows="2"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="timeInput">시간</label>
-                    <input type="time" class="form-control" id="timeInput" name="timeInput">
+                    <h2></h2>
+                    <label for="post-comment">오픈 채팅방</label>
+                    <input id="post-comment" placeholder="오픈 채팅방" name="open_chat" class="form-control">
+                </div>
+
+                <div class="Horizontal">
+                    <form action="">
+                        <button type="submit" class="btn btn-danger" onclick="PostEnd()">취소</button>
+                    </form>
+                    <button type="submit" class="btn btn-success" onclick="PostEnd()">등록</button>
                 </div>
             </div>
-            <div class="form-group">
-                <h2></h2>
-                <label for="post-comment">포스트 내용</label>
-                <textarea id="post-comment" class="form-control" name="content" rows="2"></textarea>
-            </div>
-            <div class="form-group">
-                <h2></h2>
-                <label for="post-comment">오픈 채팅방</label>
-                <input id="post-comment" placeholder="오픈 채팅방" class="form-control">
-            </div>
-
-            <div class="Horizontal">
-                <button type="button" class="btn btn-danger" onclick="PostEnd()">취소</button>
-                <button type="button" class="btn btn-success" onclick="PostEnd()">등록</button>
-            </div>
-        </div>
+        </form>
     </div>
 
 </body>
