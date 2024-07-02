@@ -80,16 +80,20 @@ def post():
         title = request.form['title']
         content = request.form['content']
         
-        bobmate_cat = request.form.get('bobmate_cat')
+        bobmate_cat = request.form.get('selected_option')
         food_cat = request.form.get('food_cat')
         date = request.form.get('date')
         time = request.form.get('time')
         open_chat = request.form.get('open_chat')
+        max_People = request.form.get('max_People')
+        print("=" * 100)
+        print("{} {} {} {} {} {} {} {} {}".format(email, title, content, bobmate_cat, food_cat, date, time, open_chat, max_People))
+        print("=" * 100)
 
         if email:
             user = users_collection.find_one({'email': email})
             author = user['username']
-            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author': author,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat  }).inserted_id
+            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author': author,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People  }).inserted_id
             return redirect(url_for('post_detail', post_id=post_id))
         else:
             return redirect(url_for('login'))

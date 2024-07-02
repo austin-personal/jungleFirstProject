@@ -101,34 +101,30 @@
     <div class="wrap">
         <div class="Logo">
             <h1 class="Title">BOB Mate</h1>
-            <form>
-                <label for="options">카테고리</label>
-                <select id="options" name="selected_option">
-                    <option value="option1">한식</option>
-                    <option value="option2">일식</option>
-                    <option value="option3">중식</option>
-                    <option value="option3">양식</option>
-                </select>
-            </form>
+            <label for="options">카테고리</label>
+            <select id="options" name="selected_option">
+                <option value="option1">한식</option>
+                <option value="option2">일식</option>
+                <option value="option3">중식</option>
+                <option value="option3">양식</option>
+            </select>
         </div>
         <hr class="LogoLine">
 
-        <div id="post-box" class="form-post">
-            <div class="form-group">
-                <label for="post-url">포스트 제목</label>
-                <input id="post-url" placeholder="포스트 제목" class="form-control" name="title" placeholder="">
-            </div>
-                
-            <div>
+        <form action="/post" method="post">
+            <div id="post-box" class="form-post">
+                <div class="form-group">
+                    <label for="post-url">포스트 제목</label>
+                    <input id="post-url" placeholder="포스트 제목" class="form-control" name="title" placeholder="">
+                </div>
+                    
                 <label for="options">밥 메이트 유형</label>
-                <select id="options" name="selected_option">
+                <select id="options" name="selected_option bobmate_cat">
                     <option value="option1">배달</option>
                     <option value="option2">매장</option>
                 </select>
-            </div>
-            <h1></h1>
-            <div class="Horizontal">
-                <div>
+                <h1></h1>
+                <div class="Horizontal">
                     <label for="options">음식 카테고리</label>
                     <select id="options" name="selected_option food_cat">
                         <option value="option1">한식</option>
@@ -136,52 +132,40 @@
                         <option value="option3">중식</option>
                         <option value="option3">양식</option>
                     </select>
-                </div>
-                <input id="post-url" placeholder="최대 인원" name="max_People" class="form-control maxPeople" placeholder="">
+                    <input id="post-url" placeholder="최대 인원" name="max_People" class="form-control maxPeople" placeholder="">
 
-            </div>
-            <h1></h1>
-            <div class="Horizontal">
-
-                <div class="form-group">
-                    <label for="dateInput">날짜</label>
-                    <input type="date" class="form-control" id="dateInput" name="date">
                 </div>
-                <div class="form-group">
-                    <label for="timeInput">시간</label>
-                    <input type="time" class="form-control" id="timeInput" name="time">
-                </div>
-            </div>
-            <div class="form-group">
-                <h2></h2>
-                <label for="post-comment">포스트 내용</label>
-                <textarea id="post-comment" class="form-control" name="content" rows="2"></textarea>
-            </div>
-            <div class="form-group">
-                <h2></h2>
-                <label for="post-comment">오픈 채팅방</label>
-                <input id="post-comment" placeholder="오픈 채팅방" name="open_chat" class="form-control">
-            </div>
+                <h1></h1>
+                <div class="Horizontal">
 
-            <div class="Horizontal">
-                <button type="button" class="btn btn-danger" onclick="PostEnd()">취소</button>
-                <button type="button" class="btn btn-success" onclick="PostEnd()">등록</button>
-            </div>
-        </div>
-        
-        <div id="cards-box"  style="display:none">
-            <div class="card" onclick="handleCardClick()">
-                <div class="card-body">
-                    <div class="Horizontal">
-                        <a href="#" class="card-title">양식</a>
-                        <h5 class="People">2/4</h5>
+                    <div class="form-group">
+                        <label for="dateInput">날짜</label>
+                        <input type="date" class="form-control" id="dateInput" name="date">
                     </div>
-                    <p class="card-text">같이 식사해요</p>
+                    <div class="form-group">
+                        <label for="timeInput">시간</label>
+                        <input type="time" class="form-control" id="timeInput" name="time">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h2></h2>
+                    <label for="post-comment">포스트 내용</label>
+                    <textarea id="post-comment" class="form-control" name="content" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <h2></h2>
+                    <label for="post-comment">오픈 채팅방</label>
+                    <input id="post-comment" placeholder="오픈 채팅방" name="open_chat" class="form-control">
+                </div>
+
+                <div class="Horizontal">
+                    <form action="">
+                        <button type="submit" class="btn btn-danger" onclick="PostEnd()">취소</button>
+                    </form>
+                    <button type="submit" class="btn btn-success" onclick="PostEnd()">등록</button>
                 </div>
             </div>
-            <!-- Bottom right button -->
-            <button type="button" onclick="PostStart()" class="btn btn-primary fixed-button">우측하단 버튼</button>
-        </div>
+        </form>
     </div>
 
 </body>
