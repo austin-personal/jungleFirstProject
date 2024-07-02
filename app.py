@@ -75,14 +75,21 @@ def logout():
 @app.route('/post', methods=['GET', 'POST'])
 def post():
     if request.method == 'POST':
+        email = session.get('email')
+
         title = request.form['title']
         content = request.form['content']
-        email = session.get('email')
+        
+        bobmate_cat = request.form.get('bobmate_cat')
+        food_cat = request.form.get('food_cat')
+        date = request.form.get('date')
+        time = request.form.get('time')
+        open_chat = request.form.get('open_chat')
 
         if email:
             user = users_collection.find_one({'email': email})
             author = user['username']
-            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author': author}).inserted_id
+            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author': author,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat  }).inserted_id
             return redirect(url_for('post_detail', post_id=post_id))
         else:
             return redirect(url_for('login'))
@@ -91,25 +98,74 @@ def post():
 
 
 # 포스팅 업데이트
-@app.route('/post/<post_id>/update', methods=['GET', 'POST'])
+@app.route('/post/<post_id>/update', methods=['POST'])
 def update_post(post_id):
-    post = posts_collection.find_one({'_id': ObjectId(post_id)})
-    if not post:
-        return 'Post not found', 404
-
     if request.method == 'POST':
+        email = session.get('email')
+
+        # Ensure user is logged in
+        if not email:
+            return redirect(url_for('login'))
+
+        # Get the updated data from the form
         title = request.form['title']
         content = request.form['content']
-        posts_collection.update_one({'_id': ObjectId(post_id)}, {'$set': {'title': title, 'content': content}})
-        return redirect(url_for('post_detail', post_id=post_id))
+        bobmate_cat = request.form.get('bobmate_cat')
+        food_cat = request.form.get('food_cat')
+        date = request.form.get('date')
+        time = request.form.get('time')
+        open_chat = request.form.get('open_chat')
 
-    return render_template('update_post.html', post=post)
+        # Update the post in the database
+        updated_post = {
+            'title': title,
+            'content': content,
+            'bobmate_cat': bobmate_cat,
+            'food_cat': food_cat,
+            'date': date,
+            'time': time,
+            'open_chat': open_chat
+        }
+
+        # Perform the update operation
+        result = posts_collection.update_one(
+            {'_id': ObjectId(post_id), 'author_email': email},
+            {'$set': updated_post}
+        )
+
+        if result.modified_count == 1:
+            return redirect(url_for('post_detail', post_id=post_id))
+        else:
+            return render_template('error.html', message='Unauthorized access or post not found')
+
+    return redirect(url_for('home'))  # Redirect to home if not a POST request
+
 
 # 포스팅 삭제
 @app.route('/post/<post_id>/delete', methods=['POST'])
 def delete_post(post_id):
-    posts_collection.delete_one({'_id': ObjectId(post_id)})
-    return redirect(url_for('home'))
+    if request.method == 'POST':
+        email = session.get('email')
+
+        # Ensure user is logged in
+        if not email:
+            return redirect(url_for('login'))
+
+        # Check if the user is the author of the post
+        post = posts_collection.find_one({'_id': ObjectId(post_id)})
+        if not post or post['author_email'] != email:
+            return render_template('error.html', message='Unauthorized access or post not found')
+
+        # Perform the delete operation
+        result = posts_collection.delete_one({'_id': ObjectId(post_id)})
+
+        if result.deleted_count == 1:
+            return redirect(url_for('home'))
+        else:
+            return render_template('error.html', message='Error deleting post')
+
+    return redirect(url_for('home'))  # Redirect to home if not a POST request
+
 
 # 포스팅 상세 페이지
 @app.route('/post/<post_id>')
