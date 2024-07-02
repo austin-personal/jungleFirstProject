@@ -55,7 +55,7 @@
 </head>
 <body>
     
-    <form action="/post" method="get">
+    <form action="/login" method="post">
         <header>
             <h1 class="Title">BOB Mate</h1>
         </header>
@@ -65,15 +65,15 @@
                 <h2>로그인</h2>
             </div>
             <div>
-                <input type="email" placeholder="E-Mail" class="form-control" id="LoginID">
+                <input type="email" placeholder="E-Mail" class="form-control" id="LoginID" name="email">
             </div>
             <div>
-                <input type="password" placeholder="PW" class="form-control" id="LoginPW">
+                <input type="password" placeholder="PW" class="form-control" id="LoginPW" name="password">
             </div>
             <div>
                 <button type="submit" class="btn btn-success form-control" >Login</button>
             </div>
-            <form action="/register" method="get">
+            <form action="/login" method="post">
                 <button type="submit" class="btn btn-link">회원가입</button>
             </form>
         </div>
