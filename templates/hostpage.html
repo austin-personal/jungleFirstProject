@@ -36,7 +36,11 @@
         font-family: "Arial", sans-serif;
       }
 
-
+      .header {
+        display: flex;
+        justify-content: space-between;
+    
+    }
       .wrap{
         display:flex;
         justify-content:center;
@@ -114,7 +118,7 @@
         display:flex;
       }
       
-      .row-data{
+      .response-body{
         display:flex;
         
       }
@@ -168,14 +172,19 @@
             BOB Mate
           </a>
 
-        </div>
-        
-        <div class="card-button">
-            <button type="button" class="btn btn-success" onclick="updatePost()">수정</button>
-            <button type="button" class="btn btn-danger" onclick = "">삭제</button>
+            <div class="card-button">
+                <div class = "card-button-box">
+                    <button type="button" class="btn btn-success" onclick="updatePost()">수정</button>
+                </div>
+                
+                <div class = "card-button-box">
+                    <button type="button" class="btn btn-danger" onclick = "">삭제</button>
+                </div>
+            </div>
         </div>
 
         <hr class="LogoLine">
+        
     </div>
 
 
@@ -215,7 +224,7 @@
           </div>
           
         
-          <div class = "row-data">
+          <div class = "response-body">
         
             <div class = "card card-response">
               <div class = "reply-data reply-short">
@@ -231,7 +240,7 @@
             
           </div>
 
-          <div class = "row-data">
+          <div class = "response-body">
         
             <div class = "card card-response">
               <div class = "reply-data reply-short">
@@ -247,7 +256,7 @@
             
           </div>
 
-          <div class = "row-data">
+          <div class = "response-body">
         
             <div class = "card card-response">
               <div class = "reply-data reply-short">
