@@ -6,6 +6,7 @@ import bcrypt
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+
 # MongoDB 연결 설정
 client = MongoClient('localhost', 27017)
 db = client['bobMate']
@@ -24,7 +25,7 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         existing_user = users_collection.find_one({'email': email})
-
+        print(email, username)
         if existing_user:
             return render_template('register.html', message='Email already exists, please choose another one')
 
@@ -67,7 +68,8 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('home'))
+    return redirect(url_for('home')) 
+    # 리다이렉트를 로그인 페이지로?????? 해야하지 않나????
 
 # 포스팅 작성
 @app.route('/post', methods=['GET', 'POST'])
@@ -144,4 +146,4 @@ def update_attendance(post_id):
     return redirect(url_for('post_detail', post_id=post_id))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run('0.0.0.0', port=5002, debug=True)
