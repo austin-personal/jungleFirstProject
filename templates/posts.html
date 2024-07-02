@@ -35,9 +35,6 @@
             justify-content: space-between;
             width: 100%;
         }
-        .Title {
-            font-size: 30px;
-        }
         .Horizontal{
             width: auto;
             display: flex;
@@ -87,28 +84,56 @@
         .card:hover {
             cursor: pointer;
         }
+
+        /* 타이틀 로고 스타일 */
+        .Title {
+            text-decoration: none;
+            font-size: 30px;
+            color:inherit;
+        }
+        .Title:hover {
+            cursor: pointer;
+            text-decoration: none;
+            color:inherit;
+        }
+        /* 타이틀 로고 스타일 */
     </style>
     
 
     <script> 
-    
+    function MainLogo()
+    {
+        alert('!')
+    }
     </script>
 </head>
 
 <body>
     <div class="wrap">
         <div class="Logo">
-            <h1 class="Title">BOB Mate</h1>
-            <form action="/posts" method="post">
-                <label for="options">카테고리</label>
-                <select id="options" name="sort" value="all" onchange="this.form.submit()">
-                    <option value="all">전체</option>
-                    <option value="kor">한식</option>
-                    <option value="jap">일식</option>
-                    <option value="chi">중식</option>
-                    <option value="ame">양식</option>
-                </select>
+            <form action="/posts" method="get">
+                <h1 onclick="this.form.submit()" class="Title">BOB Mate</h1>
             </form>
+            <div>
+                <form action="/posts" method="post">
+                    <label for="options">음식종류</label>
+                    <select id="options" name="sort_food" value="all" onchange="this.form.submit()">
+                        <option value="all">전체</option>
+                        <option value="kor">한식</option>
+                        <option value="jap">일식</option>
+                        <option value="chi">중식</option>
+                        <option value="ame">양식</option>
+                    </select>
+                </form>
+                <form action="/posts" method="post">
+                    <label for="options">식사방법</label>
+                    <select id="options" name="sort_bobmate" value="all" onchange="this.form.submit()">
+                        <option value="all">전체</option>
+                        <option value="del">배달</option>
+                        <option value="shop">매장</option>
+                    </select>
+                </form>
+            </div>
         </div>
         <hr class="LogoLine">
 

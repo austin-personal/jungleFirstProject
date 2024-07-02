@@ -35,9 +35,6 @@
             justify-content: space-between;
             width: 100%;
         }
-        .Title {
-            font-size: 30px;
-        }
         .Horizontal{
             width: auto;
             display: flex;
@@ -87,6 +84,21 @@
         .card:hover {
             cursor: pointer;
         }
+
+        /* 타이틀 로고 스타일 */
+        .Title {
+            text-decoration: none;
+            font-size: 30px;
+            color:inherit;
+        }
+        .Title:hover {
+            cursor: pointer;
+            text-decoration: none;
+            color:inherit;
+        }
+        /* 타이틀 로고 스타일 */
+
+
     </style>
     
 
@@ -100,7 +112,7 @@
 <body>
     <div class="wrap">
         <div class="Logo">
-            <h1 class="Title">BOB Mate</h1>
+            <h1><a href="/posts" class="Title">BOB Mate</a></h1>
             <div>
                 <label for="options">카테고리</label>
                 <select id="options" name="selected_option">
