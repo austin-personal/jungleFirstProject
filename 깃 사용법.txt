@@ -1,0 +1,4 @@
+- 그 브랜치로 이동
+git checkout (브랜치이름)
+- 그 브랜치에 메인 파일들 넣기
+git pull origin main
