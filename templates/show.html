@@ -44,7 +44,7 @@
         flex-direction:column;
         
         width:900px;
-        margin : 100px auto;
+        margin : 50px auto;
         
       }
 
@@ -87,12 +87,6 @@
         padding: 10px 5px;
       }
 
-      .btn-size {
-        height: 40px;
-        width: 70px;
-        margin: 5px;
-      }
-
 
       .tot-background{
         width:500px;
@@ -110,9 +104,37 @@
       .flex-info{
         display:flex;
       }
+      
+      .row-data{
+        display:flex;
+        
+      }
+
+      .reply-data{
+        margin:5px;
+      }
 
       hr{
         border-bottom:5px;
+      }
+
+      .wrap-reply{
+        display:flex;
+        flex-direction:column;
+        
+        justify-content:space-evenly;
+        align-items:center;
+        
+        width:900px;
+        margin : 5px auto;
+      }
+
+      .reply-short{
+        width:50px;
+      }
+
+      .reply-long{
+        width:425px;
       }
 
 
@@ -180,26 +202,50 @@
           </div>
 
         </div>
-
     </div>
 
-    <div class="alert alert-dark" role="alert">
-      A simple dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-    </div>
-    
-    
-    
-    <div class="card" onclick="handleCardClick()">
-      <div class="card-body">
-          <div class="Horizontal">
-              <a href="#" class="card-title">양식</a>
-              <h5 class="People">2/4</h5>
+
+    <div class = "wrap-reply">
+      <div class = "row-data">
+        
+        <div class = "card">
+          <div class = "reply-data reply-short">
+            ID
           </div>
-          <p class="card-text">같이 식사해요</p>
+        </div>
+        
+        <div class = "card">
+          <div class = "reply-data reply-long">
+            댓글 내용
+          </div>
+        </div>
+        
       </div>
-  </div>
+
+      <div class = "row-data">
+        
+        <div class = "card">
+          <div class = "reply-data reply-short">
+            ID
+          </div>
+        </div>
+        
+        <div class = "card">
+          <div class = "reply-data reply-long">
+            댓글 내용
+          </div>
+        </div>
+        
+      </div>
+
+
+
+
+    </div>
 
 
   </body>
   
 </html>
+
+
