@@ -80,18 +80,30 @@ def logout():
 @app.route('/posts', methods=['GET', 'POST'])
 def get_posts():
     if request.method == 'POST':
-        
-        sort = request.form.get('sort_food')
-        if sort == 'chi':
-            posts = posts_collection.find({'food_cat':'chi'})
-        elif sort == 'jap':
-            posts = posts_collection.find({'food_cat':'jap'})
-        elif sort == 'kor':
-            posts = posts_collection.find({'food_cat':'kor'})
-        elif sort == 'ame':
-            posts = posts_collection.find({'food_cat':'ame'})
-        elif sort == 'all':
-            posts = posts_collection.find({'food_cat':'all'})
+        sort_food = request.form.get('sort_food')
+        sort_bobmate = request.form.get('sort_bobmate')
+        # 카테고리 딕셔너리
+        food_category_map = {
+            'chi': 'chi',
+            'jap': 'jap',
+            'kor': 'kor',
+            'ame': 'ame',
+            'all': 'all'
+        }
+
+        mate_category_map = {
+            'del': 'chi',
+            'shop': 'jap',
+        }
+        # 기본값 설정
+        food_category = food_category_map.get(sort_food, None)
+        mate_category = mate_category_map.get(sort_bobmate, None)
+
+        # 조회 수행
+        if food_category and mate_category:
+            posts = posts_collection.find({'food_cat': food_category, 'bobmate_cat': mate_category})
+
+
     posts_data = []
     for post in posts:
         posts_data.append({
