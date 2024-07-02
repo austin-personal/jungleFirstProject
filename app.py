@@ -17,7 +17,7 @@ users_collection = db['users']
 @app.route('/')
 def home():
     posts = posts_collection.find()
-    return render_template('index.html', posts=posts)
+    return render_template('Home.html', posts=posts)
 
 # 회원가입
 @app.route('/register', methods=['GET', 'POST'])
@@ -45,7 +45,7 @@ def register():
         session['email'] = email  # 회원가입 후 자동으로 로그인 처리
         return redirect(url_for('home'))
 
-    return render_template('register.html')
+    return render_template('registerTest.html')
 
 # 로그인
 @app.route('/login', methods=['GET', 'POST'])
