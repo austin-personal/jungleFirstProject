@@ -191,7 +191,24 @@
             margin-left:-10px;
         }
 
+        .info-left-past{
+            margin-left:-30px;
+        }
 
+        .info-middle-past{
+            margin-left:-40px;
+        }
+
+
+        .hostpage {
+            color: black; /* Set link and all content inside to black */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .hostpage:hover {
+            color: black; /* Maintain black color on hover */
+            text-decoration: none; /* Remove underline */
+        }
 
 
     </style>
@@ -203,7 +220,7 @@
     <div class = "header">
         <div class = "Logo">
           <a href = "bobList.html">
-            Bob Mate
+            BOB Mate
           </a>
   
         </div>
@@ -245,31 +262,40 @@
         </div>
 
 
-
-        <div class = "flex-info-col">
-            <div class = "info">
-                현재 참여하고 있는 공동 식사
+        
+            <div class = "flex-info-col">
+                
+                <div class = "info">
+                    현재 참여하고 있는 공동 식사
+                </div>
+                
+                <a href = "hostpage.html" class = "hostpage">
+                    <div class = "card card-flex">
+                        <div class = "info-left">
+                            제목
+                        </div>
+        
+                        <div class = "info-middle">
+                            날짜
+                        </div>
+        
+                        <div class= "info-middle">
+                            인원 / 제한
+                        </div>
+        
+                        <div class = "info-right">
+                            음식 종류
+                        </div>
+        
+                    </div>
+                </a>
             </div>
 
-            <div class = "card card-flex">
-                <div class = "info-left">
-                    제목
-                </div>
+            
 
-                <div class = "info-middle">
-                    날짜
-                </div>
+        
 
-                <div class= "info-middle">
-                    인원 / 제한
-                </div>
 
-                <div class = "info-right">
-                    음식 종류
-                </div>
-
-            </div>
-        </div>    
 
         
         <div class = "flex-info-col">
@@ -282,11 +308,11 @@
                     1
                 </div>
 
-                <div class = "info-middle">
+                <div class = "info-middle-past">
                     제목
                 </div>
 
-                <div class= "info-middle">
+                <div class= "info-middle-past">
                     날짜
                 </div>
 
@@ -299,7 +325,51 @@
 
         </div>   
           
+        <div class = "flex-info-col">
+            <div class = "card card-flex">
+                <div class = "info-left-past">
+                    2
+                </div>
+
+                <div class = "info-middle-past">
+                    제목
+                </div>
+
+                <div class= "info-middle-past">
+                    날짜
+                </div>
+
+                <div class = "info-right">
+                    음식 종류
+                </div>
+
+            </div>
+
+
+        </div>
         
+        <div class = "flex-info-col">
+            <div class = "card card-flex">
+                <div class = "info-left-past">
+                    3
+                </div>
+
+                <div class = "info-middle-past">
+                    제목
+                </div>
+
+                <div class= "info-middle-past">
+                    날짜
+                </div>
+
+                <div class = "info-right">
+                    음식 종류
+                </div>
+
+            </div>
+
+
+        </div>   
 
 
         </div>
