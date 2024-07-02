@@ -60,23 +60,43 @@
             <h1 class="Title">BOB Mate</h1>
         </header>
 
-        <div id="LoginBox">
-            <div>
-                <h2>로그인</h2>
+        <div>
+            <button type="button" onclick="SigninBtn()" class="btn btn-link">회원가입</button>
+        </div>
+    </div>
+
+    <form action="/register" method="post">
+        <div>
+            <h2>회원가입</h2>
+        </div>
+        <div>
+            <input type="email" placeholder="E-Mail" class="form-control is-valid" id="email">
+            <div class="valid-feedback">
             </div>
-            <div>
-                <input type="email" placeholder="E-Mail" class="form-control" id="LoginID">
-            </div>
-            <div>
-                <input type="password" placeholder="PW" class="form-control" id="LoginPW">
-            </div>
-            <div>
-                <button type="button" class="btn btn-success form-control" >Login</button>
-            </div>
-            <form action="/register" method="get">
-                <button type="submit" class="btn btn-link">회원가입</button>
+            <div id="validationServer04Feedback"  class="invalid-feedback">
+                입력하신 비밀번호와 일치하지 않습니다.
             </div>
         </div>
+        <div>
+            <input type="password" placeholder="PW" class="form-control" id="password">
+        </div>
+        <div>
+            <input type="password" placeholder="Confirm PW" class="form-control is-invalid" id="confirmpassword">
+            <div class="valid-feedback">
+            </div>
+            <div id="validationServer04Feedback"  class="invalid-feedback">
+                입력하신 비밀번호와 일치하지 않습니다.
+            </div>
+        </div>
+        <div>
+            <input type="text" placeholder="Name" class="form-control" id="username">
+        </div>
+        <h2></h2>
+        <div>
+            <form action="/login" method="get">
+                <button type="submit" onclick="CancelSigninBtn()" class="btn btn btn-danger">취소</button>
+            </form>
+            <button type="submit" class="btn btn btn-success">회원가입</button>
     </div>
 </body>
 </html>
