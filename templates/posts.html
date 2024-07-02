@@ -114,7 +114,7 @@
         <div id="cards-box">
             <div>
                 {% for post in posts_data %}
-                <form action="/post/{{ post.id }}" method="post">
+                <form action="/post/{{ post.id }}" method="get">
                     <input type="hidden" name="post_id" value="{{ post.id }}">
                     <div class="card" onclick="this.closest('form').submit()">
                         <div class="card-body">
