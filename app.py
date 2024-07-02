@@ -28,7 +28,8 @@ def register():
         existing_user = users_collection.find_one({'email': email})
 
         if existing_user:
-            return render_template('register.html', message='Email already exists, please choose another one')
+            flash('Email already exists, please choose another one')
+            return render_template('register.html')
 
         username = request.form['username']
         password = request.form['password'].encode('utf-8')
@@ -44,7 +45,7 @@ def register():
         users_collection.insert_one(user_data)
 
         session['email'] = email  # 회원가입 후 자동으로 로그인 처리
-        return redirect(url_for('posts'))
+        return redirect(url_for('get_posts'))
 
     return render_template('register.html')
 
