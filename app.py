@@ -163,6 +163,11 @@ def post_detail(post_id):
     # Retrieve post data from MongoDB
     post = posts_collection.find_one({'_id': ObjectId(post_id)})
     post['food_cat'] = translate_food_cat(post.get('food_cat'))
+    post['bobmate_cat'] = translate_bobmate_cat(post.get('bobmate_cat'))
+
+    user = users_collection.find_one({'email': post['author_email']})
+    user['username']= user.get('username')
+
     # 작성자가 자신의 포스트 상세 페이지에 접근할때
     if session.get('email') == post['author_email']:
         return render_template('hostpage.html', post=post, is_author=True)
@@ -170,7 +175,7 @@ def post_detail(post_id):
         return 'Post not found', 404
     
     # Pass post data to the template for rendering
-    return render_template('post_detail.html', post=post)
+    return render_template('post_detail.html', post=post, user=user)
 
 
 # 포스팅 작성
@@ -311,7 +316,13 @@ def translate_food_cat(food_cat):
     elif food_cat == 'all':
         return '전체'
 
-
+def translate_bobmate_cat(bobmate_cat):
+    if bobmate_cat == 'del':
+        return '배달'
+    elif bobmate_cat == 'shop':
+        return '매장'
+    elif bobmate_cat == 'all':
+        return '전체'
 
 
 if __name__ == '__main__':
