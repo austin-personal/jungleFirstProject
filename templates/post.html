@@ -120,7 +120,7 @@
             <div id="post-box" class="form-post">
                 <div class="form-group">
                     <label for="post-url">포스트 제목</label>
-                    <input id="post-url" placeholder="포스트 제목" class="form-control" name="title" placeholder="">
+                    <input id="post-url" placeholder="포스트 제목" class="form-control" name="title" placeholder="" required>
                 </div>
                     
                 <label for="options">밥 메이트 유형</label>
@@ -139,29 +139,29 @@
                             <option value="ame">양식</option>
                         </select>
                     </div>
-                    <input id="post-url" placeholder="최대 인원" name="max_People" class="form-control maxPeople" placeholder="">
+                    <input id="post-url" placeholder="최대 인원" name="max_People" class="form-control maxPeople" placeholder="" required>
                 </div>
                 <h1></h1>
                 <div class="Horizontal">
 
                     <div class="form-group">
                         <label for="dateInput">날짜</label>
-                        <input type="date" class="form-control" id="dateInput" name="date">
+                        <input type="date" class="form-control" id="dateInput" name="date" required>
                     </div>
                     <div class="form-group">
                         <label for="timeInput">시간</label>
-                        <input type="time" class="form-control" id="timeInput" name="time">
+                        <input type="time" class="form-control" id="timeInput" name="time" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <h2></h2>
                     <label for="post-comment">포스트 내용</label>
-                    <textarea id="post-comment" class="form-control" name="content" rows="2"></textarea>
+                    <textarea id="post-comment" class="form-control" name="content" rows="2" required></textarea>
                 </div>
                 <div class="form-group">
                     <h2></h2>
                     <label for="post-comment">오픈 채팅방</label>
-                    <input id="post-comment" placeholder="오픈 채팅방" name="open_chat" class="form-control">
+                    <input id="post-comment" placeholder="오픈 채팅방" name="open_chat" class="form-control" required>
                 </div>
 
                 <div class="Horizontal">
