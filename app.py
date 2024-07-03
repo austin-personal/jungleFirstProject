@@ -4,9 +4,11 @@ from bson import ObjectId
 import bcrypt
 from flask import flash
 from datetime import datetime
+from flask_socketio import SocketIO, join_room, leave_room, send
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 # Current Time
