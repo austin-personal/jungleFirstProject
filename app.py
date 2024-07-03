@@ -198,11 +198,12 @@ def post():
         time = request.form.get('time')
         open_chat = request.form.get('open_chat')
         max_People = request.form.get('max_People')
+        current_post_attendees_count = 0
 
         if email:
             user = users_collection.find_one({'email': email})
             author_email = user['email']
-            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author_email': author_email,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People  }).inserted_id
+            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author_email': author_email,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People, 'current_post_attendees_count':current_post_attendees_count  }).inserted_id
             return redirect(url_for('post_detail', post_id=post_id))
         else:
             flash('로그인이 만료 되었습니다')
