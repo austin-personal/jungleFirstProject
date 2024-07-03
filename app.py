@@ -202,7 +202,7 @@ def get_posts():
                 
 
     user = users_collection.find_one({'email': session.get('email')})
-    
+
     return render_template('posts.html', posts_data=posts_data, user = user)
 
 # 포스팅 상세 페이지
@@ -388,7 +388,10 @@ def mypage(user_id):
     user = users_collection.find_one({'_id': ObjectId(user_id)})
     
     post = posts_collection.find_one({'author_email': user['email']})
-    
+    post['food_cat'] = translate_food_cat(post.get('food_cat'))
+    post['current_post_attendees_count'] = len(post.get('attendees'))
+
+
     return render_template('mypage.html', user=user, post=post)
 
 def translate_food_cat(food_cat):
