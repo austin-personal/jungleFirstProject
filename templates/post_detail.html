@@ -299,7 +299,7 @@
                 </div>
   
                 <div class="card">
-                  <p class="tot-background sub-background label-middle">?/{{ post.max_People }}</p>
+                  <p class="tot-background sub-background label-middle">{{ post.cur_attend_num }}/{{ post.max_People }}</p>
                 </div>
             </div>
             </div>
@@ -343,7 +343,10 @@
 
 
           <div class="card-button">
+            <form action="/post/{{ post._id }}/attend" method="post">
               <button type="button" class="btn btn-success" onclick="showAlert()">참여</button>
+            </form>
+              
               <a href="/posts">
                   <button type="button" class="btn btn-danger">나가기</button>
               </a>

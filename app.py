@@ -140,6 +140,9 @@ def get_posts():
                 if get_current_time() > p_datetime_str:
                     print("기간만료")
                     continue
+                elif post['current_post_attendees_count'] == post['max_People']:
+                    print("인원 충족")
+                    continue
                 else: 
                     posts_data.append({
                         'id': str(post['_id']),
@@ -153,7 +156,8 @@ def get_posts():
                         'open_chat': post.get('open_chat'),
                         'max_People': post.get('max_People')
                     })
-
+                #참가자 다 찼을시 로드 안함
+                
             print(posts_data)
     return render_template('posts.html', posts_data=posts_data)
 
@@ -164,7 +168,8 @@ def post_detail(post_id):
     post = posts_collection.find_one({'_id': ObjectId(post_id)})
     post['food_cat'] = translate_food_cat(post.get('food_cat'))
     post['bobmate_cat'] = translate_bobmate_cat(post.get('bobmate_cat'))
-
+    current_post_attendees_count = len(post.get('attendees', []))
+    post['cur_attend_num'] = current_post_attendees_count
     user = users_collection.find_one({'email': post['author_email']})
     user['username']= user.get('username')
 
@@ -292,15 +297,11 @@ def update_attendance(post_id):
     post = posts_collection.find_one({'_id': ObjectId(post_id)})
     if not post:
         return 'Post not found', 404
-
-    attending = request.form.get('attending') == 'true'  # 예시로 checkbox 등에서 받아온 값을 처리
-
-    if attending:
-        # 예시로 users_collection에 사용자의 참석 여부를 업데이트하는 로직 추가
-        users_collection.update_one({'_id': user['_id']}, {'$addToSet': {'attending_events': post_id}})
-    else:
-        users_collection.update_one({'_id': user['_id']}, {'$pull': {'attending_events': post_id}})
-
+    
+    users_collection.update_one({'_id': user['_id']}, {'$addToSet': {'attending_events': post_id}})
+    posts_collection.update_one({'_id': post['_id']}, {'$addToSet': {'attendees': user['email']}})
+    test = posts_collection.find_one({'_id': ObjectId(post_id)})
+    print('test')
     return redirect(url_for('post_detail', post_id=post_id))
 
 
