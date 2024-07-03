@@ -55,37 +55,30 @@
         }
     </style>
     <script>
-        function ActiveAll()
-        {
-            $('#email').prop('disabled', false)
-        }
-        function ActiveSignup()
-        {
+    $(document).ready(function(){
+        $('#confirmpassword').on('input', function() {
+                var password = $('#password').val();
+                var confirmpassword = $('#confirmpassword').val();
+
+                if (confirmpassword === password) {
+                    $('#confirmpassword').removeClass('is-invalid').addClass('is-valid');
+                } else {
+                    $('#confirmpassword').removeClass('is-valid').addClass('is-invalid');
+                }
+            });
+        $('#password').on('input', function() {
             var password = $('#password').val();
             var confirmpassword = $('#confirmpassword').val();
 
             if (confirmpassword.length > 0) {
                 if (confirmpassword === password) {
-                    //비밀번호 이상없음
-                    if($('#email').hasClass('is-valid') && $('#username').val()!="")
-                    {
-                        $('#signupBtn').prop('disabled', false)
-                    }
-                    else
-                    {
-                        $('#signupBtn').prop('disabled', true)
-                    }
                     $('#confirmpassword').removeClass('is-invalid').addClass('is-valid');
                 } else {
                     $('#confirmpassword').removeClass('is-valid').addClass('is-invalid');
-                    $('#signupBtn').prop('disabled', true)
                 }
             }
-        }
-    $(document).ready(function(){
-        $('#confirmpassword').on('input', ()=>ActiveSignup());
-        $('#password').on('input', ()=>ActiveSignup());
-        $('#username').on('input', ()=>ActiveSignup());
+        });
+
         $('#checkBtn').click(function(){
             
             const email = $('#email').val();
@@ -99,9 +92,6 @@
                         $('#email').removeClass('is-valid').addClass('is-invalid')
                     } else {
                         $('#email').removeClass('is-invalid').addClass('is-valid')
-                        /*중복체크 버튼 비활성화*/
-                        $('#email').prop('disabled', true)
-                        $('#checkBtn').prop('disabled', true)
                     }
                 },
                 error: function(error) {
@@ -155,7 +145,7 @@
             <h2></h2>
             <div>
                 <a href="/login"  class="btn btn-danger">취소</a>
-                <button onclick="ActiveAll()" type="submit" class="btn btn btn-success" id="signupBtn" disabled="true">회원가입</button>
+                <button type="submit" class="btn btn btn-success">회원가입</button>
             </div>
         </form>
         

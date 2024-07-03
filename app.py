@@ -38,6 +38,7 @@ def register():
             existing_user = users_collection.find_one({'email': confirmEmail})
             
             if existing_user:
+                print(existing_user)
                 return jsonify({'exists': True}), 200
             else:
                 return jsonify({'exists': False}), 200
@@ -57,8 +58,8 @@ def register():
             }
             users_collection.insert_one(user_data)
 
-            session['email'] = email  # 회원가입 후 자동으로 로그인 처리
-            return redirect(url_for('get_posts'))
+        session['email'] = email  # 회원가입 후 자동으로 로그인 처리
+        return redirect(url_for('get_posts'))
         
         
 
