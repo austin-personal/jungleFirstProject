@@ -34,10 +34,14 @@ def register():
         if 'confirmEmail' in request.form:
             confirmEmail = request.form['confirmEmail']
             existing_user = users_collection.find_one({'email': confirmEmail})
+            
             if existing_user:
-                flash('Email already exists, please choose another one')
-                return render_template('register.html')
-        elif 'email' in request.form:
+                print(existing_user)
+                return jsonify({'exists': True}), 200
+            else:
+                return jsonify({'exists': False}), 200
+            
+        else:
             email = request.form['email']
             username = request.form['username']
             password = request.form['password'].encode('utf-8')

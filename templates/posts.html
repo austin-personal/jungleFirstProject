@@ -48,7 +48,7 @@
 }
 
 .wrap {
-    width: auto;
+    width: 100%;
     height: auto;
     margin: auto;
 }
@@ -69,10 +69,6 @@
 * {
     font-family: "Arial", sans-serif;
 }
-.maxPeople {
-    width: 100px;
-}
-
 .comment {
     color: blue;
     font-weight: bold;
@@ -86,6 +82,12 @@
 }
 .card {
     margin-top: 20px;
+    width :1000px;
+}
+.cards-box {
+    display: flex;
+    justify-content: center;
+    height: auto;
 }
 
 .card:hover {
@@ -130,7 +132,7 @@
         </div>
         <hr class="LogoLine">
 
-        <div id="cards-box">
+        <div id="cards-box" class="cards-box">
             <div>
                 {% for post in posts_data %}
                 <form action="/post/{{ post.id }}" method="get">
@@ -138,14 +140,13 @@
                     <div class="card" onclick="this.closest('form').submit()">
                         <div class="card-body">
                             <div class="Horizontal">
-                                <h5 href="#" class="card-title comment">{{ post.food_cat }}</h5>
-                                <h5 class="People">{{ post.people }}/{{ post.max_People }}</h5>
+                                <p class="card-title comment">{{ post.title }}</p>
+                                <h5 href="#" class="card-text">{{ post.food_cat }}</h5>
                             </div>
                             <div class="Horizontal">
-                                <p class="card-text">{{ post.title }}</p>
                                 <p class="card-text">{{ post.content }}</p>     
+                                <h5 class="People">{{ post.people }}/{{ post.max_People }}</h5>
                             </div>
-
                         </div>
                     </div>
                 </form>
