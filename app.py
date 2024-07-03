@@ -109,15 +109,16 @@ def get_posts():
         print(food_category, mate_category)
         
         # 전체 선택시 모든 포스트 디비 가져오기
-        if sort_food == 'all':
-            sort_food = 1
-        if sort_bobmate == 'all':
-            sort_bobmate = 1
-        print(sort_food, sort_bobmate)
+        query = {}
+        if sort_food != 'all':
+            query['food_cat'] = sort_food
+        if sort_bobmate != 'all':
+            query['bobmate_cat'] = sort_bobmate
+        print(query)
         
         # 조회 수행
         if food_category and mate_category:
-            posts = posts_collection.find({'food_cat': sort_food, 'bobmate_cat': sort_bobmate})
+            posts = posts_collection.find(query)
             print(posts)
             for post in posts:
                 # 기간 만료시 포스트 데이터 로드 안함
