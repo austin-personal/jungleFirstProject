@@ -30,8 +30,10 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        confirmEmail = request.form['confirmEmail']
         email = request.form['email']
-        existing_user = users_collection.find_one({'email': email})
+        # email 중복 체크
+        existing_user = users_collection.find_one({'email': confirmEmail})
 
         if existing_user:
             flash('Email already exists, please choose another one')
@@ -153,7 +155,9 @@ def post_detail(post_id):
     # Retrieve post data from MongoDB
     post = posts_collection.find_one({'_id': ObjectId(post_id)})
     post['food_cat'] = translate_food_cat(post.get('food_cat'))
-
+    # 작성자가 자신의 포스트 상세 페이지에 접근할때
+    if session.get('email') == post['author_email']:
+        return render_template('hostpage.html', post=post, is_author=True)
     if not post:
         return 'Post not found', 404
     
@@ -252,11 +256,11 @@ def delete_post(post_id):
         result = posts_collection.delete_one({'_id': ObjectId(post_id)})
 
         if result.deleted_count == 1:
-            return redirect(url_for('home'))
+            return redirect(url_for('get_posts'))
         else:
             return render_template('error.html', message='Error deleting post')
 
-    return redirect(url_for('home'))  # Redirect to home if not a POST request
+    return redirect(url_for('get_posts'))  # Redirect to home if not a POST request
 
 
 
