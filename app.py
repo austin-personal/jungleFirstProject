@@ -4,7 +4,7 @@ from bson import ObjectId
 import bcrypt
 from flask import flash
 from datetime import datetime
-from flask_socketio import SocketIO, join_room, leave_room, send
+from flask_socketio import SocketIO, join_room, leave_room, send, emit
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -30,14 +30,18 @@ def home():
 
 
 ###  chat room redirect
-room={}
+rooms={}
 @app.route('/chat')
 def chat():
     if 'email' not in session:
         return redirect(url_for('login'))
     
     room = request.args.get('room')
-    username = session['email']
+    email = session['email']
+
+    user = users_collection.find_one({'email':email})
+    print(user)
+    username = user['username']
     return render_template('chatpage.html', room=room, username=username)
 
 @socketio.on('join')
@@ -56,7 +60,7 @@ def on_join(data):
     else:
         rooms[room].append({'username': username, 'online': True})
 
-    emit('message', f'{username} has entered the room.', to=room)
+    emit('message', f'{username} 님이 입장 하였습니다.', to=room)
     emit('update_members', rooms[room], to=room)
 
 @socketio.on('leave')
@@ -71,7 +75,7 @@ def on_leave(data):
                 member['online'] = False
                 break
 
-    emit('message', f'{username} has left the room.', to=room)
+    emit('message', f'{username} 나갔습니다.', to=room)
     emit('update_members', rooms[room], to=room)
 
 @socketio.on('message')

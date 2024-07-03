@@ -134,7 +134,7 @@
             var memberList = document.getElementById('member-list');
             memberList.innerHTML = '';
             members.forEach(function(member) {
-                memberList.innerHTML += '<div>' + member.username + (member.online ? ' (online)' : ' (offline)') + '</div>';
+                memberList.innerHTML += '<div>' + member.username + (member.online ? ' - 온라인' : ' - 오프라인') + '</div>';
             });
         });
 
