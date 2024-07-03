@@ -79,47 +79,48 @@ def logout():
 # 포스트 디비에서 가져오기
 @app.route('/posts', methods=['GET', 'POST'])
 def get_posts():
+    posts_data = []
     if request.method == 'POST':
         sort_food = request.form.get('sort_food')
         sort_bobmate = request.form.get('sort_bobmate')
+        print("{}  {}".format(sort_food, sort_bobmate))
         # 카테고리 딕셔너리
         food_category_map = {
-            'chi': 'chi',
-            'jap': 'jap',
-            'kor': 'kor',
-            'ame': 'ame',
-            'all': 'all'
+            'chi': '중식',
+            'jap': '일식',
+            'kor': '한식',
+            'ame': '양식',
+            'all': '전체'
         }
 
         mate_category_map = {
-            'del': 'chi',
-            'shop': 'jap',
+            'del': '배달',
+            'shop': '매장',
+            'all': '전체'
         }
         # 기본값 설정
         food_category = food_category_map.get(sort_food, None)
         mate_category = mate_category_map.get(sort_bobmate, None)
-
+        print(food_category, mate_category)
         # 조회 수행
         if food_category and mate_category:
-            posts = posts_collection.find({'food_cat': food_category, 'bobmate_cat': mate_category})
+            posts = posts_collection.find({'food_cat': sort_food, 'bobmate_cat': sort_bobmate})
+            
+            for post in posts:
+                posts_data.append({
+                    'id': str(post['_id']),
+                    'title': post['title'],
+                    'content': post['content'],
+                    'author_email': post['author_email'],
+                    'bobmate_cat': post.get('bobmate_cat'),
+                    'food_cat': translate_food_cat(post.get('food_cat')),
+                    'date': post.get('date'),
+                    'time': post.get('time'),
+                    'open_chat': post.get('open_chat'),
+                    'max_People': post.get('max_People')
+                })
 
-
-    posts_data = []
-    for post in posts:
-        posts_data.append({
-            'id': str(post['_id']),
-            'title': post['title'],
-            'content': post['content'],
-            'author_email': post['author_email'],
-            'bobmate_cat': post.get('bobmate_cat'),
-            'food_cat': translate_food_cat(post.get('food_cat')),
-            'date': post.get('date'),
-            'time': post.get('time'),
-            'open_chat': post.get('open_chat'),
-            'max_People': post.get('max_People')
-        })
-
-    print(posts_data)
+            print(posts_data)
     return render_template('posts.html', posts_data=posts_data)
 
 # 포스팅 상세 페이지

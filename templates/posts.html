@@ -117,21 +117,20 @@
             <div>
                 <form action="/posts" method="post">
                     <label for="options">음식종류</label>
-                    <select id="options" name="sort_food" value="all" onchange="this.form.submit()">
+                    <select id="options" name="sort_food" value="all">
                         <option value="all">전체</option>
                         <option value="kor">한식</option>
                         <option value="jap">일식</option>
                         <option value="chi">중식</option>
                         <option value="ame">양식</option>
                     </select>
-                </form>
-                <form action="/posts" method="post">
                     <label for="options">식사방법</label>
-                    <select id="options" name="sort_bobmate" value="all" onchange="this.form.submit()">
+                    <select id="options" name="sort_bobmate" value="all">
                         <option value="all">전체</option>
                         <option value="del">배달</option>
                         <option value="shop">매장</option>
                     </select>
+                    <button type="submit">검색</button>
                 </form>
             </div>
         </div>
