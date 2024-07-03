@@ -170,12 +170,14 @@ def post_detail(post_id):
     post['bobmate_cat'] = translate_bobmate_cat(post.get('bobmate_cat'))
     current_post_attendees_count = len(post.get('attendees', []))
     post['cur_attend_num'] = current_post_attendees_count
+
     user = users_collection.find_one({'email': post['author_email']})
+
     user['username']= user.get('username')
 
     # 작성자가 자신의 포스트 상세 페이지에 접근할때
     if session.get('email') == post['author_email']:
-        return render_template('hostpage.html', post=post, is_author=True)
+        return render_template('hostpage.html', post=post, user=user,is_author=True)
     if not post:
         return 'Post not found', 404
     
@@ -288,6 +290,7 @@ def delete_post(post_id):
 @app.route('/post/<post_id>/attend', methods=['POST'])
 def update_attendance(post_id):
     email = session.get('email')
+    print(email, post_id)
     if not email:
         return redirect(url_for('login'))
 
@@ -303,7 +306,7 @@ def update_attendance(post_id):
     posts_collection.update_one({'_id': post['_id']}, {'$addToSet': {'attendees': user['email']}})
     test = posts_collection.find_one({'_id': ObjectId(post_id)})
     print('test')
-    return redirect(url_for('post_detail', post_id=post_id))
+    return redirect(url_for('post_detail', post_id=post_id, user=user))
 
 
 def translate_food_cat(food_cat):
