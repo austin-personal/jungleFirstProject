@@ -115,7 +115,7 @@
         font-size: 15px;
 
         height: 40px;
-        width: 50px;
+        width: 70px;
 
         text-align: center;
 
@@ -274,10 +274,17 @@
                          {{ }} / {{users_collection.max_People}}
                     </div>
     
-                    <div class = "info-right">
-                        {{users_collection.food_cat}}
+                    <div class= "info-middle">
+                      {{users_collection.food_cat}}
                     </div>
-    
+
+                    <div class = "info-right">
+                      <div class = "card-button-box">
+                          <button id = "chatButton" type="button" class="btn btn-success card-button-in">채팅방</button>                     
+                      </div>                      
+                    </div>    
+                    
+                      
                 </div>
             </a>
         </div>    
@@ -365,6 +372,11 @@
     function showAlert(){
       alert('참여가 확정됐습니다!')
     }
+
+    document.getElementById('chatButton').onclick = function() {
+      location.href = '/chatpage.html';
+    };
+
 
   </script>
 

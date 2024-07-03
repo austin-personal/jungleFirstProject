@@ -16,8 +16,9 @@ post_detail -"재석"
    -content 여백 (O)
 - 주최자 출력하기 (O)
 
-- 참여 버튼 누를 시, jinja2 id 전송
-- 마이페이지 채팅 버튼
+- 참여 버튼 누를 시, jinja2 id 전송(O)
+- 호스트 페이지 완료 (O)
+- 마이페이지 채팅 버튼 
 
 
 - 포스트 delete, update 구현

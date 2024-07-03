@@ -43,6 +43,7 @@
         width: 100%;
         }
 
+
       .wrap{
         display:flex;
         justify-content:center;
@@ -66,16 +67,27 @@
 
       .LogoLine {
             border: thin solid black;
-            width:auto;
         }
 
       .card{
-        margin:20px;
+        margin:17.5px;
       }
-    
-      .card-response{
-        margin:10px;
+
+      .content-card{
+        padding-left:12.5px;
+        padding-top:12.5px;
+
+        border: 1px solid rgb(156, 151, 151);
+        border-radius: 10px; /* Round the corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+        height:250px;
       }
+
+      .new-card{
+        align-items: center;
+      }
+
 
 
       .card-button {
@@ -83,13 +95,8 @@
         justify-content: space-evenly;
         align-items: center;
 
-        padding:10px; 
+        padding:10px;  
       }
-
-      .card-button-box {
-        margin-right:10px;
-      }
-
 
       .card-button-in {
         font-size: 15px;
@@ -102,14 +109,31 @@
         padding: 10px 5px;
       }
 
+      .bigger-card {
+        border: 1px solid grey;
+        border-radius: 10px; /* Round the corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+      }
+
+      .bolder{
+        font-weight:700;
+      }
+
+      .color{
+        background-color:darkgray;
+      }
 
       .tot-background{
-        width:500px;
-        padding:10px;
+        width:450px;
+        
+        padding-top:12.5px;
 
         border-radius:5px;
 
+        align-items: center;
         text-align:center;
+
       }
 
       .tot-background-large{
@@ -124,7 +148,7 @@
         display:flex;
       }
       
-      .response-body{
+      .row-data{
         display:flex;
         
       }
@@ -165,6 +189,42 @@
         color:black;
         text-decoration:none;
       }
+      
+      .label-middle{
+        width:175px;
+      }
+
+      .label-short{
+        width:150px;
+      }
+
+      .label-shorter{
+        width:100px;
+      }
+
+      .info-flex{
+        display:flex;
+      }
+
+      .decoration{
+        color:black;
+        text-decoration: none;
+      }
+
+      .decoration:hover{
+        color:black;
+        text-decoration: none;
+      }
+
+      .response-body{
+        display:flex;
+      }
+
+      .fancier{
+        border-radius: 10px; /* Round the corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+      }
 
     </style>
 
@@ -174,113 +234,129 @@
 
     <div class = "header">
         <div class = "Logo">
-          <a href = "bobList.html" class = "decoration">
+          <a href = "/posts" class = "decoration">
             BOB Mate
           </a>
 
-            <div class="card-button">
-                <a href = "update.html">
-                    <div class = "card-button-box">
-                        <button type="button" class="btn btn-success">수정</button>
-                    </div>
-                </a>
-                
-                <div class = "card-button-box">
-                    <button type="button" class="btn btn-danger" onclick = "">삭제</button>
-                </div>
-            </div>
         </div>
-
-        
     </div>
 
 
     <div class="wrap">
-        <div class="card-body">
-          
-          <div class = "card">
-            <a class="card-title tot-background decoration">포스트 제목</a>
-          </div>
-          
-          <div class = "card">
-            <p class="card-text tot-background">밥 메이트 유형</p>
-          </div>
-          
-          <div class = "flex-info">
-            <div class = "card">
-              <p class="tot-background sub-background">음식 카테고리</p>
-            </div>
-
-            <div class = "card">
-              <p class="tot-background sub-background">최대 인원</p>
-            </div>
-          </div>
-
-          <div class = "flex-info">
-            <div class = "card">
-              <p class="tot-background sub-background">날짜</p>
-            </div>
+      <div class="card-body">
+          <div class = "card bigger-card">
+            <div class = "info-flex">
             
-            <div class = "card">
-            <p class="tot-background sub-background">시간</p>
-            </div>
-          </div>
-
-          <div class = "card">
-            <p class="tot-background-large">포스트 내용</p>
+              <div class="card new-card label-short">
+                <div class="card-title tot-background decoration bolder">제목</div>
+              </div>
+              
+              <div class="card">
+                <a class="card-title tot-background decoration">{{ post.title }}</a>
+              </div>
+            </div>  
           </div>
           
-        
-          <div class = "response-body">
-        
-            <div class = "card card-response">
-              <div class = "reply-data reply-short">
-                ID
+          <div class = "card bigger-card">
+            <div class = "info-flex">
+            
+              <div class="card new-card label-short">
+                <p class="card-title tot-background decoration bolder">주최자</p>
+              </div>
+              
+              <div class="card">
+                <a class="card-title tot-background decoration">{{ user.username }}</a>
               </div>
             </div>
-            
-            <div class = "card card-response">
-              <div class = "reply-data reply-long">
-                댓글 내용
-              </div>
-            </div>
-            
           </div>
 
-          <div class = "response-body">
-        
-            <div class = "card card-response">
-              <div class = "reply-data reply-short">
-                ID
-              </div>
-            </div>
+          <div class = "card bigger-card">
+            <div class = "info-flex">
             
-            <div class = "card card-response">
-              <div class = "reply-data reply-long">
-                댓글 내용
+              <div class="card new-card label-short">
+                <p class="card-title tot-background decoration bolder">밥메이트 유형</p>
               </div>
-            </div>
+              
+              <div class="card">
+                <a class="card-title tot-background decoration">{{ post.bobmate_cat }}</a>
+              </div>
             
+            </div>
           </div>
 
-          <div class = "response-body">
-        
-            <div class = "card card-response">
-              <div class = "reply-data reply-short">
-                ID
-              </div>
+                     
+          <div class = "card bigger-card">
+
+            <div class = "info-flex">
+              <div class = "info-flex">
+                <div class="card">
+                    <p class="tot-background sub-background label-shorter bolder">음식 유형</p>
+                </div>
+  
+                <div class="card">
+                  <p class="tot-background sub-background label-middle">{{ post.food_cat }}</p>
+                </div>
+            </div>  
+
+            <div class = "info-flex">
+                <div class="card">
+                    <p class="tot-background sub-background label-shorter bolder">인원현황</p>
+                </div>
+  
+                <div class="card">
+                  <p class="tot-background sub-background label-middle">?/{{ post.max_People }}</p>
+                </div>
             </div>
-            
-            <div class = "card card-response">
-              <div class = "reply-data reply-long">
-                댓글 내용
-              </div>
             </div>
-            
+
           </div>
 
-        
-        </div>
+          <div class = "card bigger-card">
+
+              <div class = "info-flex">
+                <div class = "info-flex">
+                  <div class="card">
+                      <p class="tot-background sub-background label-shorter bolder">날짜</p>
+                  </div>
+    
+                  <div class="card">
+                    <p class="tot-background sub-background label-middle">{{ post.date }}</p>
+                  </div>
+              </div>  
+  
+              <div class = "info-flex">
+                  <div class="card">
+                      <p class="tot-background sub-background label-shorter bolder">시간</p>
+                  </div>
+    
+                  <div class="card">
+                    <p class="tot-background sub-background label-middle">{{ post.time }}</p>
+                  </div>
+              </div>
+            </div>
+
+          </div>         
+          
+          
+          
+            <div class="card content-card">
+                <p class="tot-background-large">{{ post.content }}</p>
+            </div>
+
+
+          
+            <div class="card-button">
+              <a href = "update.html">
+                  <div class = "card-button-box">
+                      <button type="button" class="btn btn-success">수정</button>
+                  </div>
+              </a>
+              
+              <div class = "card-button-box">
+                  <button type="button" class="btn btn-danger" onclick = "">삭제</button>
+              </div>
+          </div>
+      </div>
     </div>
 
 
