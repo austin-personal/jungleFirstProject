@@ -39,22 +39,23 @@ def register():
                 return render_template('register.html')
         elif 'email' in request.form:
             email = request.form['email']
-        
-        username = request.form['username']
-        password = request.form['password'].encode('utf-8')
-        hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
+            username = request.form['username']
+            password = request.form['password'].encode('utf-8')
+            hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
-        user_data = {
-            'email': email,
-            'username': username,
-            'password': hashed_password,
-            'attending_events': []  # 예시로 사용자가 참석하는 이벤트 목록을 저장할 수 있습니다
-        }
+            user_data = {
+                'email': email,
+                'username': username,
+                'password': hashed_password,
+                'attending_events': []  # 예시로 사용자가 참석하는 이벤트 목록을 저장할 수 있습니다
 
-        users_collection.insert_one(user_data)
+            }
+            users_collection.insert_one(user_data)
 
         session['email'] = email  # 회원가입 후 자동으로 로그인 처리
         return redirect(url_for('get_posts'))
+        
+        
 
     return render_template('register.html')
 
