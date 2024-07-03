@@ -42,7 +42,7 @@ def chat():
     user = users_collection.find_one({'email':email})
     print(user)
     username = user['username']
-    return render_template('chatpage.html', room=room, username=username)
+    return render_template('chatpage.html', room=room, user=user, username=username)
 
 @socketio.on('join')
 def on_join(data):
@@ -327,6 +327,7 @@ def post():
             author_email = user['email']
             post_id = posts_collection.insert_one({'title': title, 'content': content, 'author_email': author_email,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People, 'current_post_attendees_count':current_post_attendees_count}).inserted_id
             # 새 포스트 만들 때 참가자 목록에 주최자도 포함
+            users_collection.update_one({'_id': post_id}, {'$addToSet': {'attending_events': post_id}})
             posts_collection.update_one({'_id': post_id}, {'$addToSet': {'attendees': user['email']}})
             return redirect(url_for('post_detail', post_id=post_id))
         else:
@@ -824,6 +825,12 @@ def delete_post(post_id):
 
         # Perform the delete operation
         result = posts_collection.delete_one({'_id': ObjectId(post_id)})
+        if result.deleted_count == 1:
+        # Remove the post_id from attending_events in all user documents
+            update_result = users_collection.update_many(
+            {'attending_events': post_id},
+            {'$pull': {'attending_events': post_id}}
+            )
 
         if result.deleted_count == 1:
             return redirect(url_for('get_posts'))

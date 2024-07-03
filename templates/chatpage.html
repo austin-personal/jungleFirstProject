@@ -14,6 +14,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            position: relative;
         }
         #chat {
             width: 70%;
@@ -65,11 +66,26 @@
         #send-button:hover {
             background: #45a049;
         }
+        #back-button {
+            padding: 10px 20px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            text-decoration: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        #back-button:hover {
+            background: #45a049;
+        }
         #member-list {
             padding: 10px;
             width: 200px;
             height: 400px;
-
             flex: 1;
             background: #f9f9f9;
         }
@@ -85,22 +101,33 @@
             flex-direction: column;
             flex: 3;
         }
+        #chat-buttons {
+            display: flex;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
+    <div>
+        <div>
+            <a href="/mypage/{{ user._id }}" id="back-button">마이페이지</a>
+        </div>
+    </div>
     <div id="chat">
         <div id="chat-container">
             <h2>Chat Room</h2>
             <div id="chat-messages"></div>
-            <div style="display: flex; margin-top: 10px;">
-                <input type="text" id="message-input" placeholder="Type your message here...">
+            <div id="chat-buttons">
+                <input type="text" id="message-input" placeholder="메시지 입력...">
                 <button id="send-button" onclick="sendMessage()">Send</button>
+
             </div>
         </div>
         <div>
             <h2>Members</h2>
             <div id="member-list"></div>
         </div>
+    
     </div>
 
     <script type="text/javascript">
@@ -109,6 +136,7 @@
         // Extract room and username from URL parameters
         var room = "{{ room }}";
         var username = "{{ username }}";
+        var userId = "{{ session.get('user_id') }}";  // Assuming user_id is stored in session
         console.log(room, username);
 
         // Join the room
@@ -145,9 +173,14 @@
             messageInput.value = '';
         }
 
+        function goToMyPage() {
+            window.location.href = '/mypage/' + userId;
+        }
+
         window.onbeforeunload = function() {
             socket.emit('leave', {'username': username, 'room': room});
         };
     </script>
+
 </body>
 </html>
