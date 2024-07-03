@@ -1,1 +1,153 @@
-ㅋㅋ
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #chat {
+            width: 70%;
+            display: flex;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #chat-messages {
+            border-right: 1px solid #ccc;
+            padding: 10px;
+            height: 400px;
+            overflow-y: scroll;
+            flex: 3;
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            max-width: 60%;
+        }
+        .message.user-message {
+            background: #d1f0ff;
+            align-self: flex-end;
+        }
+        .message.other-message {
+            background: #e1ffc7;
+            align-self: flex-start;
+        }
+        #message-input {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #send-button {
+            padding: 10px 20px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #send-button:hover {
+            background: #45a049;
+        }
+        #member-list {
+            padding: 10px;
+            width: 200px;
+            height: 400px;
+
+            flex: 1;
+            background: #f9f9f9;
+        }
+        #member-list div {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background: #e0e0e0;
+            border-radius: 5px;
+        }
+        #chat-container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat">
+        <div id="chat-container">
+            <h2>Chat Room</h2>
+            <div id="chat-messages"></div>
+            <div style="display: flex; margin-top: 10px;">
+                <input type="text" id="message-input" placeholder="Type your message here...">
+                <button id="send-button" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <div>
+            <h2>Members</h2>
+            <div id="member-list"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // Extract room and username from URL parameters
+        var room = "{{ room }}";
+        var username = "{{ username }}";
+        console.log(room, username);
+
+        // Join the room
+        socket.emit('join', {'username': username, 'room': room});
+
+        socket.on('message', function(msg) {
+            var chatMessages = document.getElementById('chat-messages');
+            var messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+
+            if (msg.startsWith(username)) {
+                messageDiv.classList.add('user-message');
+            } else {
+                messageDiv.classList.add('other-message');
+            }
+
+            messageDiv.textContent = msg;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;  // Auto-scroll to the bottom
+        });
+
+        socket.on('update_members', function(members) {
+            var memberList = document.getElementById('member-list');
+            memberList.innerHTML = '';
+            members.forEach(function(member) {
+                memberList.innerHTML += '<div>' + member.username + (member.online ? ' (online)' : ' (offline)') + '</div>';
+            });
+        });
+
+        function sendMessage() {
+            var messageInput = document.getElementById('message-input');
+            var message = messageInput.value;
+            socket.emit('message', {'message': message, 'room': room, 'username': username});
+            messageInput.value = '';
+        }
+
+        window.onbeforeunload = function() {
+            socket.emit('leave', {'username': username, 'room': room});
+        };
+    </script>
+</body>
+</html>

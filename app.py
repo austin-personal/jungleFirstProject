@@ -28,6 +28,62 @@ def home():
     posts = posts_collection.find()
     return render_template('Home.html', posts=posts)
 
+
+###  chat room redirect
+room={}
+@app.route('/chat')
+def chat():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    
+    room = request.args.get('room')
+    username = session['email']
+    return render_template('chatpage.html', room=room, username=username)
+
+@socketio.on('join')
+def on_join(data):
+    username = data['username']
+    room = data['room']
+    join_room(room)
+
+    if room not in rooms:
+        rooms[room] = []
+
+    # Check if the user is already in the list
+    user_in_room = next((member for member in rooms[room] if member['username'] == username), None)
+    if user_in_room:
+        user_in_room['online'] = True
+    else:
+        rooms[room].append({'username': username, 'online': True})
+
+    emit('message', f'{username} has entered the room.', to=room)
+    emit('update_members', rooms[room], to=room)
+
+@socketio.on('leave')
+def on_leave(data):
+    username = data['username']
+    room = data['room']
+    leave_room(room)
+
+    if room in rooms:
+        for member in rooms[room]:
+            if member['username'] == username:
+                member['online'] = False
+                break
+
+    emit('message', f'{username} has left the room.', to=room)
+    emit('update_members', rooms[room], to=room)
+
+@socketio.on('message')
+def handle_message(data):
+    username = data['username']
+    room = data['room']
+    message = data['message']
+    send(f'{username}: {message}', to=room)
+
+
+
+
 # 회원가입
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -741,36 +797,9 @@ def update_attendance(post_id):
     return redirect(url_for('post_detail', post_id=post_id, user=user))
 
 
-### TEST chat room redirect
-@app.route('/chat')
-def chat():
-    if 'email' not in session:
-        return redirect(url_for('login'))
-    
-    room = request.args.get('room')
-    username = session['email']
-    return render_template('chat.html', room=room, username=username)
 
 
-# WebSocket Chat Functionality
-@socketio.on('join')
-def on_join(data):
-    username = data['username']
-    room = data['room']
-    join_room(room)
-    send(username + ' has entered the room.', to=room)
 
-@socketio.on('leave')
-def on_leave(data):
-    username = data['username']
-    room = data['room']
-    leave_room(room)
-    send(username + ' has left the room.', to=room)
-
-@socketio.on('message')
-def handle_message(data):
-    room = data['room']
-    send(data['message'], to=room)
 
 def translate_food_cat(food_cat):
     if food_cat == 'chi':
