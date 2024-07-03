@@ -30,15 +30,16 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        confirmEmail = request.form['confirmEmail']
-        email = request.form['email']
-        # email 중복 체크
-        existing_user = users_collection.find_one({'email': confirmEmail})
-
-        if existing_user:
-            flash('Email already exists, please choose another one')
-            return render_template('register.html')
-
+        email = ''
+        if 'confirmEmail' in request.form:
+            confirmEmail = request.form['confirmEmail']
+            existing_user = users_collection.find_one({'email': confirmEmail})
+            if existing_user:
+                flash('Email already exists, please choose another one')
+                return render_template('register.html')
+        elif 'email' in request.form:
+            email = request.form['email']
+        
         username = request.form['username']
         password = request.form['password'].encode('utf-8')
         hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
