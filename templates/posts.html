@@ -74,6 +74,13 @@
     font-weight: bold;
 }
 
+.fixed-dropdowns {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1000;
+}
+
 .fixed-button {
     position: fixed;
     bottom: 20px;
@@ -110,28 +117,30 @@
             <form action="/posts" method="get">
                 <h1 onclick="this.form.submit()" class="Title">BOB Mate</h1>
             </form>
-            <div>
-                <form action="/posts" method="post">
-                    <label for="options">음식종류</label>
-                    <select id="options" name="sort_food" value="all">
-                        <option value="all">전체</option>
-                        <option value="kor">한식</option>
-                        <option value="jap">일식</option>
-                        <option value="chi">중식</option>
-                        <option value="ame">양식</option>
-                    </select>
-                    <label for="options">식사방법</label>
-                    <select id="options" name="sort_bobmate" value="all">
-                        <option value="all">전체</option>
-                        <option value="del">배달</option>
-                        <option value="shop">매장</option>
-                    </select>
-                    <button type="submit">검색</button>
-                </form>
-            </div>
+            
+            <a href="/mypage"  class="btn btn-primary">마이페이지</a>
         </div>
         <hr class="LogoLine">
 
+        <div class="fixed-dropdowns">
+            <form action="/posts" method="post">
+                <label for="options">음식종류</label>
+                <select id="options" name="sort_food" value="all">
+                    <option value="all">전체</option>
+                    <option value="kor">한식</option>
+                    <option value="jap">일식</option>
+                    <option value="chi">중식</option>
+                    <option value="ame">양식</option>
+                </select>
+                <label for="options">식사방법</label>
+                <select id="options" name="sort_bobmate" value="all">
+                    <option value="all">전체</option>
+                    <option value="del">배달</option>
+                    <option value="shop">매장</option>
+                </select>
+                <button type="submit">검색</button>
+            </form>
+        </div>
         <div id="cards-box" class="cards-box">
             <div>
                 {% for post in posts_data %}
@@ -154,7 +163,6 @@
             </div>
             
             <!-- 마이페이지 구현 완료되면 링크에 유저 정보 담아서 링크 접속 -->
-            <a href="/mypage"  class="btn btn-primary fixed-button">마이페이지</a>
             <a href="/post"  class="btn btn-primary fixed-button">공식합시다</a>
         </div>
     </div>

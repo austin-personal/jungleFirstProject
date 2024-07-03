@@ -102,6 +102,7 @@
                         /*중복체크 버튼 비활성화*/
                         $('#email').prop('disabled', true)
                         $('#checkBtn').prop('disabled', true)
+                        $('#checkBtn').text('완료')
                     }
                 },
                 error: function(error) {
@@ -127,7 +128,7 @@
             </div>
             <div class="Horizontal">
                 <div>
-                    <input type="email" placeholder="E-Mail" class="form-control" name="email" id="email" required autocomplete="new-email">
+                    <input type="email" placeholder="E-Mail" class="form-control" name="email" id="email" required autocomplete="email">
                     <div class="valid-feedback">
                     </div>
                     <div id="validationServer04Feedback"  class="invalid-feedback">
