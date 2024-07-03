@@ -242,123 +242,123 @@
     </div>
 
 
-    <div class="wrap">
-      <div class="card-body">
-          <div class = "card bigger-card">
-            <div class = "info-flex">
-            
-              <div class="card new-card label-short">
-                <div class="card-title tot-background decoration bolder">제목</div>
-              </div>
-              
-              <div class="card">
-                <a class="card-title tot-background decoration">{{ post.title }}</a>
-              </div>
-            </div>  
-          </div>
-          
-          <div class = "card bigger-card">
-            <div class = "info-flex">
-            
-              <div class="card new-card label-short">
-                <p class="card-title tot-background decoration bolder">주최자</p>
-              </div>
-              
-              <div class="card">
-                <a class="card-title tot-background decoration">{{ user.username }}</a>
-              </div>
-            </div>
-          </div>
-
-          <div class = "card bigger-card">
-            <div class = "info-flex">
-            
-              <div class="card new-card label-short">
-                <p class="card-title tot-background decoration bolder">밥메이트 유형</p>
-              </div>
-              
-              <div class="card">
-                <a class="card-title tot-background decoration">{{ post.bobmate_cat }}</a>
-              </div>
-            
-            </div>
-          </div>
-
-                     
-          <div class = "card bigger-card">
-
-            <div class = "info-flex">
+    <form action="/post/{{ post._id }}/update" method="post">
+      <div class="wrap">
+        <div class="card-body">
+            <div class = "card bigger-card">
               <div class = "info-flex">
-                <div class="card">
-                    <p class="tot-background sub-background label-shorter bolder">음식 유형</p>
+              
+                <div class="card new-card label-short">
+                  <div class="card-title tot-background decoration bolder">제목</div>
                 </div>
-  
+                
                 <div class="card">
-                  <p class="tot-background sub-background label-middle">{{ post.food_cat }}</p>
+                  <a class="card-title tot-background decoration" name="title">{{ post.title }}</a>
                 </div>
-            </div>  
-
-            <div class = "info-flex">
-                <div class="card">
-                    <p class="tot-background sub-background label-shorter bolder">인원현황</p>
-                </div>
-  
-                <div class="card">
-                  <p class="tot-background sub-background label-middle">?/{{ post.max_People }}</p>
-                </div>
+              </div>  
             </div>
+            
+            <div class = "card bigger-card">
+              <div class = "info-flex">
+              
+                <div class="card new-card label-short">
+                  <p class="card-title tot-background decoration bolder">주최자</p>
+                </div>
+                
+                <div class="card">
+                  <a class="card-title tot-background decoration">{{ user.username }}</a>
+                </div>
+              </div>
             </div>
 
-          </div>
+            <div class = "card bigger-card">
+              <div class = "info-flex">
+              
+                <div class="card new-card label-short">
+                  <p class="card-title tot-background decoration bolder">밥메이트 유형</p>
+                </div>
+                
+                <div class="card">
+                  <a class="card-title tot-background decoration">{{ post.bobmate_cat }}</a>
+                </div>
+              
+              </div>
+            </div>
 
-          <div class = "card bigger-card">
+                      
+            <div class = "card bigger-card">
 
               <div class = "info-flex">
                 <div class = "info-flex">
                   <div class="card">
-                      <p class="tot-background sub-background label-shorter bolder">날짜</p>
+                      <p class="tot-background sub-background label-shorter bolder">음식 유형</p>
                   </div>
     
                   <div class="card">
-                    <p class="tot-background sub-background label-middle">{{ post.date }}</p>
+                    <p class="tot-background sub-background label-middle">{{ post.food_cat }}</p>
                   </div>
               </div>  
-  
+
               <div class = "info-flex">
                   <div class="card">
-                      <p class="tot-background sub-background label-shorter bolder">시간</p>
+                      <p class="tot-background sub-background label-shorter bolder">인원현황</p>
                   </div>
     
                   <div class="card">
-                    <p class="tot-background sub-background label-middle">{{ post.time }}</p>
+                    <p class="tot-background sub-background label-middle">?/{{ post.max_People }}</p>
                   </div>
               </div>
+              </div>
+
             </div>
 
-          </div>         
-          
-          
-          
-            <div class="card content-card">
-                <p class="tot-background-large">{{ post.content }}</p>
-            </div>
+            <div class = "card bigger-card">
+
+                <div class = "info-flex">
+                  <div class = "info-flex">
+                    <div class="card">
+                        <p class="tot-background sub-background label-shorter bolder">날짜</p>
+                    </div>
+      
+                    <div class="card">
+                      <p class="tot-background sub-background label-middle">{{ post.date }}</p>
+                    </div>
+                </div>  
+    
+                <div class = "info-flex">
+                    <div class="card">
+                        <p class="tot-background sub-background label-shorter bolder">시간</p>
+                    </div>
+      
+                    <div class="card">
+                      <p class="tot-background sub-background label-middle">{{ post.time }}</p>
+                    </div>
+                </div>
+              </div>
+
+            </div>         
+            
+            
+            
+              <div class="card content-card">
+                  <p class="tot-background-large">{{ post.content }}</p>
+              </div>
 
 
-          
-            <div class="card-button">
-              <a href = "update.html">
+            
+              <div class="card-button">
                   <div class = "card-button-box">
-                      <button type="button" class="btn btn-success">수정</button>
+                      <button type="submit" class="btn btn-success">수정</button>
                   </div>
-              </a>
-              
-              <div class = "card-button-box">
-                  <button type="button" class="btn btn-danger" onclick = "">삭제</button>
-              </div>
-          </div>
+                
+                <div class = "card-button-box">
+                    <button type="button" class="btn btn-danger" onclick = "">삭제</button>
+                </div>
+            </div>
+        </div>
       </div>
-    </div>
 
+    </form>
 
 
 
