@@ -201,8 +201,9 @@ def get_posts():
                 #참가자 다 찼을시 로드 안함
                 
 
-
-    return render_template('posts.html', posts_data=posts_data)
+    user = users_collection.find_one({'email': session.get('email')})
+    
+    return render_template('posts.html', posts_data=posts_data, user = user)
 
 # 포스팅 상세 페이지
 @app.route('/post/<post_id>')
@@ -380,6 +381,15 @@ def update_attendance(post_id):
     print('test')
     return redirect(url_for('post_detail', post_id=post_id, user=user))
 
+# 마이페이지
+@app.route('/mypage/<user_id>', methods = ['GET'])
+def mypage(user_id):
+    
+    user = users_collection.find_one({'_id': ObjectId(user_id)})
+    
+    post = posts_collection.find_one({'author_email': user['email']})
+    
+    return render_template('mypage.html', user=user, post=post)
 
 def translate_food_cat(food_cat):
     if food_cat == 'chi':

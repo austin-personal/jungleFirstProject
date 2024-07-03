@@ -118,7 +118,10 @@
                 <h1 onclick="this.form.submit()" class="Title">BOB Mate</h1>
             </form>
             
-            <a href="/mypage"  class="btn btn-primary">마이페이지</a>
+            <form action = "/mypage/{{ user._id }}" method = "GET">
+                <button type = "submit" class = "btn btn-primary">마이페이지</button>
+            </form>
+            
         </div>
         <hr class="LogoLine">
 
