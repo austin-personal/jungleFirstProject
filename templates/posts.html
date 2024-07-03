@@ -8,7 +8,9 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        crossorigin="anonymous">
+        crossorigin="anonymous">    
+    <link rel="stylesheet" href="styles.css">
+
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -19,86 +21,78 @@
 
     <!-- 구글폰트 -->
     <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
-
     <title>bobsim</title>
+
 
     <!-- style -->
     <style type="text/css">
-        * {
-            font-family: "Arial", sans-serif;
-        }
-
         .Logo {
-            padding-top: 10px;
-            padding-left: 10px;
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-        }
-        .Horizontal{
-            width: auto;
-            display: flex;
-            justify-content: space-between;
-        }
-        .FullWidth{
-            width: auto;
-        }
+    padding-top: 10px;
+    padding-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 20px;
+}
+.Horizontal{
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.FullWidth{
+    width: auto;
+}
 
-        .LogoLine {
-            border: thin solid black;
-        }
+.LogoLine {
+    border: thin solid black;
+}
 
-        .wrap {
-            width: auto;
-            height: auto;
-            margin: auto;
-        }
-        
-        .maxPeople {
-            width: 100px;
-        }
+.wrap {
+    width: auto;
+    height: auto;
+    margin: auto;
+}
 
-        .comment {
-            color: blue;
-            font-weight: bold;
-        }
+/* 타이틀 로고 스타일 */
+.Title {
+    text-decoration: none;
+    font-size: 30px;
+    color:inherit;
+}
+.Title:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color:inherit;
+}
+/* 타이틀 로고 스타일 */
 
-        #post-box {
-            width: 500px;
-            margin: 20px auto;
-            padding: 50px;
-            border: black solid;
-            border-radius: 5px;
-        }
+* {
+    font-family: "Arial", sans-serif;
+}
+.maxPeople {
+    width: 100px;
+}
 
-        .fixed-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        .card {
-            margin-top: 20px;
-        }
+.comment {
+    color: blue;
+    font-weight: bold;
+}
 
-        .card:hover {
-            cursor: pointer;
-        }
+.fixed-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+.card {
+    margin-top: 20px;
+}
 
-        /* 타이틀 로고 스타일 */
-        .Title {
-            text-decoration: none;
-            font-size: 30px;
-            color:inherit;
-        }
-        .Title:hover {
-            cursor: pointer;
-            text-decoration: none;
-            color:inherit;
-        }
-        /* 타이틀 로고 스타일 */
+.card:hover {
+    cursor: pointer;
+}
+
     </style>
-    
 
     <script> 
     function MainLogo()
@@ -144,10 +138,14 @@
                     <div class="card" onclick="this.closest('form').submit()">
                         <div class="card-body">
                             <div class="Horizontal">
-                                <a href="#" class="card-title">{{ post.food_cat }}</a>
-                                <h5 class="People">{{ post.max_People }}</h5>
+                                <h5 href="#" class="card-title comment">{{ post.food_cat }}</h5>
+                                <h5 class="People">{{ post.people }}/{{ post.max_People }}</h5>
                             </div>
-                            <p class="card-text">{{ post.content }}</p>
+                            <div class="Horizontal">
+                                <p class="card-text">{{ post.title }}</p>
+                                <p class="card-text">{{ post.content }}</p>     
+                            </div>
+
                         </div>
                     </div>
                 </form>

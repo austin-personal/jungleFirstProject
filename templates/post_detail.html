@@ -63,7 +63,11 @@
         }
 
       .card{
-        margin:20px;
+        margin:17.5px;
+      }
+
+      .new-card{
+        align-items: center;
       }
 
       .card-button {
@@ -71,9 +75,7 @@
         justify-content: space-evenly;
         align-items: center;
 
-        padding:10px;
-
-        
+        padding:10px;  
       }
 
       .card-button-in {
@@ -94,6 +96,7 @@
 
         border-radius:5px;
 
+        align-items: center;
         text-align:center;
       }
 
@@ -150,7 +153,14 @@
         color:black;
         text-decoration:none;
       }
+      
+      .label-short{
+        width:150px;
+      }
 
+      .info-flex{
+        display:flex;
+      }
 
     </style>
 
@@ -172,9 +182,34 @@
 
     <div class="wrap">
       <div class="card-body">
-          <div class="card">
+          <div class = "info-flex">
+            
+            <div class="card new-card label-short">
+              <p class="card-title tot-background decoration">제목</p>
+            </div>
+            
+            <div class="card">
               <a class="card-title tot-background decoration">{{ post.title }}</a>
+            </div>
           </div>
+          
+          <div class = "info-flex">
+            
+            <div class="card new-card label-short">
+              <p class="card-title tot-background decoration">제목</p>
+            </div>
+            
+            <div class="card">
+              <a class="card-title tot-background decoration">{{ post.title }}</a>
+            </div>
+          </div>
+          
+          
+          <div class="card">
+            <a class="card-title tot-background decoration">{{ post.title }}</a>
+          </div>
+        </div>
+        
 
           <div class="card">
               <p class="card-text tot-background">{{ post.bobmate_cat }}</p>

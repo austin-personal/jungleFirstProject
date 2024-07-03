@@ -8,25 +8,55 @@
     <style>
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             background-color: #f8f9fa;
+            margin: 0;
         }
         .container {
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            max-width: 800px;
+            padding-top: 20px;
+        }
+        .mainUI {
+            padding-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
         }
         .btn {
             margin: 10px;
+        }
+        
+        img {
+            width: 300px;
+            height: 200px;
+        }
+        .Horizontal{
+            width: auto;
+            display: flex;
+            justify-content: space-between;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to BobMate</h1>
-        <p>Please log in or sign up to continue.</p>
-        <a href="/login" class="btn btn-primary">Log In</a>
-        <a href="/register" class="btn btn-success">Sign Up</a>
+        <img src="https://blog.krafton.com/wp-content/uploads/2022/08/%EC%82%AC%EC%A7%84%EC%9E%90%EB%A3%8C1_%ED%81%AC%EB%9E%98%ED%94%84%ED%86%A4-%EC%A0%95%EA%B8%80-%EB%A1%9C%EA%B3%A0-002-740x493.jpg" width="682" height="454">
+        <div class="mainUI">
+            <h1>BOB Mate</h1>
+            <h1></h1>
+            <div class="Horizontal">
+                <a href="/login" class="btn btn-primary">로그인</a>
+                <a href="/register" class="btn btn-success">회원가입</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>
