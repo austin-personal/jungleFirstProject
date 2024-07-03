@@ -205,6 +205,18 @@ def get_posts():
 
     return render_template('posts.html', posts_data=posts_data, user = user)
 
+
+def check_attendee_in_post(post, search_string):
+    if not post:
+        return False
+    attendees = post.get('attendees', [])
+    for a in attendees:
+        print(a, search_string)
+        if a == search_string:
+            return True
+    return False
+
+
 # 포스팅 상세 페이지
 @app.route('/post/<post_id>')
 def post_detail(post_id):
@@ -219,6 +231,10 @@ def post_detail(post_id):
 
     user['username']= user.get('username')
 
+
+    isAttendee = check_attendee_in_post(post, session['email'])
+    print("isAttendee :", isAttendee)
+
     # 작성자가 자신의 포스트 상세 페이지에 접근할때
     if session.get('email') == post['author_email']:
         return render_template('hostpage.html', post=post, user=user,is_author=True)
@@ -226,7 +242,7 @@ def post_detail(post_id):
         return 'Post not found', 404
     
     # Pass post data to the template for rendering
-    return render_template('post_detail.html', post=post, user=user)
+    return render_template('post_detail.html', post=post, user=user, isAttendee=isAttendee)
 
 
 # 포스팅 작성
@@ -381,6 +397,37 @@ def update_attendance(post_id):
     print('test')
     return redirect(url_for('post_detail', post_id=post_id, user=user))
 
+# 사용자 참석 여부 업데이트
+@app.route('/post/<post_id>/quit', methods=['POST'])
+def update_quit(post_id):
+    email = session.get('email')
+    print(email, post_id)
+    if not email:
+        return redirect(url_for('login'))
+
+    user = users_collection.find_one({'email': email})
+    if not user:
+        return 'User not found', 404
+
+    post = posts_collection.find_one({'_id': ObjectId(post_id)})
+    if not post:
+        return 'Post not found', 404
+
+    isAttendee = check_attendee_in_post(post, user['email'])
+    if not isAttendee:
+        return 'You are not an attendee of this post', 403
+
+    result = posts_collection.update_one(
+    {'_id': post['_id']},  # 대상 포스트의 ID
+    {'$pull': {'attendees': user['email']}}  # attendees 배열에서 유저를 제거
+    )
+
+    # 업데이트 결과 확인
+    if result.modified_count > 0:
+        print("유저가 성공적으로 제거되었습니다.")
+
+    return redirect(url_for('post_detail', post_id=post_id, user=user))
+
 # 마이페이지
 @app.route('/mypage/<user_id>', methods = ['GET'])
 def mypage(user_id):
@@ -388,6 +435,10 @@ def mypage(user_id):
     user = users_collection.find_one({'_id': ObjectId(user_id)})
     
     post = posts_collection.find_one({'author_email': user['email']})
+
+    if post is None:
+        return render_template('mypage.html', user=user, post=None)
+
     post['food_cat'] = translate_food_cat(post.get('food_cat'))
     post['current_post_attendees_count'] = len(post.get('attendees'))
 

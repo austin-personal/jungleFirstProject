@@ -342,17 +342,17 @@
 
 
 
-            <a href="/posts">
-                <button type="button" class="btn btn-danger">메인메뉴로</button>
-            </a>
             <div class="card-button">
+              <a href="/posts">
+                  <button type="button" class="btn btn-danger">메인메뉴로</button>
+              </a>
                 {% if isAttendee %}
-                <form action="/post/{{ post._id }}/attend" method="post">
-                  <button type="submit" class="btn btn-success" onclick="showAlert()">참여</button>
+                <form action="/post/{{ post._id }}/quit" method="post">
+                  <button type="submit" class="btn btn-danger" onclick="showQuitAlert()">탈퇴</button>
                 </form>
                 {% else %}
                 <form action="/post/{{ post._id }}/attend" method="post">
-                  <button type="submit" class="btn btn-success" onclick="showAlert()">참여</button>
+                  <button type="submit" class="btn btn-success" onclick="showAttendAlert()">참여</button>
                 </form>
                 {% endif %}
 
@@ -380,8 +380,11 @@
     document.getElementById('postDate').innerText = formattedDate;
 
     
-    function showAlert(){
+    function showAttendAlert(){
       alert('참여가 확정됐습니다!')
+    }
+    function showQuitAlert(){
+      alert('탈퇴하였습니다!')
     }
   </script>
 
