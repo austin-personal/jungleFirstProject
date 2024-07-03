@@ -210,7 +210,7 @@
 
     <div class = "header">
         <div class = "Logo">
-          <a href = "bobList.html">
+          <a href = "/posts">
             Bob Mate
           </a>
   
@@ -247,7 +247,7 @@
                 </div>
         
                 <div class = "card">
-                    <div class="tot-background long-info">{{user.name}}</div>
+                    <div class="tot-background long-info">{{user.username}}</div>
                 </div>
             </div>
         </div>
@@ -257,9 +257,16 @@
         <div class = "flex-info-col">
            
             <div class = "info">
+            {% if post != none %}
                     현재 참여하고 있는 공동 식사
+                    
+            {% else %}
+                    현재 참여하고 있는 공동 식사가 없습니다.
+            {% endif %}
             </div>
-
+            
+            
+            {% if post != none %}
             <a href = "/chat" class = "hostpage">
                 <div class = "card card-flex">
                     <div class = "info-left">
@@ -271,7 +278,7 @@
                     </div>
     
                     <div class= "info-middle">
-                         {{post.curr_attend_num}} / {{post.max_People}}
+                         {{post.current_post_attendees_count}} / {{post.max_People}}
                     </div>
     
                     <div class= "info-middle">
@@ -287,81 +294,10 @@
                       
                 </div>
             </a>
+            {% endif %}
         </div>    
 
         
-        <div class = "flex-info-col">
-            <div class = "info">
-                과거 참여 이력
-            </div>
-
-            <div class = "card card-flex">
-                <div class = "info-left-past">
-                    1
-                </div>
-
-                <div class = "info-middle">
-                    !제목!
-                </div>
-
-                <div class= "info-middle">
-                    !날짜!
-                </div>
-
-                <div class = "info-right">
-                    !음식유형!
-                </div>
-
-            </div>
-
-
-        </div>
-        
-        <div class = "flex-info-col">
-            <div class = "card card-flex">
-                <div class = "info-left-past">
-                    2
-                </div>
-
-                <div class = "info-middle">
-                  !제목!
-                </div>
-
-                <div class= "info-middle">
-                  !날짜!
-                </div>
-
-                <div class = "info-right">
-                  !음식유형!
-                </div>
-
-            </div>
-        </div>  
-
-        <div class = "flex-info-col">
-            <div class = "card card-flex">
-                <div class = "info-left-past">
-                    3
-                </div>
-
-                <div class = "info-middle">
-                  !제목!
-                </div>
-
-                <div class= "info-middle">
-                  !날짜!
-                </div>
-
-                <div class = "info-right">
-                  !음식유형!
-                </div>
-
-            </div>
-        </div>   
-          
-        
-
-
         </div>
     </div>
 
