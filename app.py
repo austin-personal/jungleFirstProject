@@ -83,7 +83,6 @@ def get_posts():
     if request.method == 'POST':
         sort_food = request.form.get('sort_food')
         sort_bobmate = request.form.get('sort_bobmate')
-        print("{}  {}".format(sort_food, sort_bobmate))
         # 카테고리 딕셔너리
         food_category_map = {
             'chi': '중식',
@@ -102,6 +101,13 @@ def get_posts():
         food_category = food_category_map.get(sort_food, None)
         mate_category = mate_category_map.get(sort_bobmate, None)
         print(food_category, mate_category)
+        
+        # 전체 선택시 모든 포스트 디비 가져오기
+        if sort_food == 'all':
+            sort_food = 1
+        elif sort_bobmate == 'all':
+            sort_bobmate = 1
+
         # 조회 수행
         if food_category and mate_category:
             posts = posts_collection.find({'food_cat': sort_food, 'bobmate_cat': sort_bobmate})
