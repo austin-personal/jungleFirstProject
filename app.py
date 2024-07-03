@@ -160,6 +160,48 @@ def get_posts():
                 #참가자 다 찼을시 로드 안함
                 
             print(posts_data)
+    else:
+        food_category = '전체'
+        mate_category = '전체'
+
+        query = {}
+        print(query)
+        
+        # 조회 수행
+        if food_category and mate_category:
+            posts = posts_collection.find(query)
+            print(posts)
+            for post in posts:
+                # 기간 만료시 포스트 데이터 로드 안함
+                p_date = post['date']
+                p_time = post['time']
+                p_datetime_str = f"{p_date} {p_time}"
+                p_datetime = datetime.strptime(p_datetime_str, "%Y-%m-%d %H:%M")
+                print(p_datetime)
+                if get_current_time() > p_datetime_str:
+                    print("기간만료")
+                    continue
+                elif post['current_post_attendees_count'] == post['max_People']:
+                    print("인원 충족")
+                    continue
+                else: 
+                    posts_data.append({
+                        'id': str(post['_id']),
+                        'title': post['title'],
+                        'content': post['content'],
+                        'author_email': post['author_email'],
+                        'bobmate_cat': post.get('bobmate_cat'),
+                        'food_cat': translate_food_cat(post.get('food_cat')),
+                        'date': post.get('date'),
+                        'time': post.get('time'),
+                        'open_chat': post.get('open_chat'),
+                        'max_People': post.get('max_People'),
+                        'current_post_attendees_count': len(post.get('attendees'))
+                    })
+                #참가자 다 찼을시 로드 안함
+                
+
+
     return render_template('posts.html', posts_data=posts_data)
 
 # 포스팅 상세 페이지
