@@ -261,7 +261,7 @@
         <div class = "flex-info-col">
            
             <div class = "info">
-            {% if post != none %}
+            {% if posts != none %}
                     현재 참여하고 있는 공동 식사
                     
             {% else %}
@@ -270,7 +270,8 @@
             </div>
             
             
-            {% if post != none %}
+            {% if posts != none %}
+            {% for post in posts %}
             <a href = "/chat" class = "hostpage">
                 <div class = "card card-flex">
                     <div class = "info-left">
@@ -298,6 +299,7 @@
                       
                 </div>
             </a>
+            {% endfor %}
             {% endif %}
         </div>    
 

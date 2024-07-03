@@ -17,7 +17,9 @@ def get_current_time():
 
 
 # MongoDB 연결 설정
-client = MongoClient('localhost', 27017)
+#client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://test:test@3.36.48.88', 27017)
+
 db = client['bobMate']
 posts_collection = db['posts']
 users_collection = db['users']
@@ -492,19 +494,38 @@ def update_quit(post_id):
 # 마이페이지
 @app.route('/mypage/<user_id>', methods = ['GET'])
 def mypage(user_id):
-    
     user = users_collection.find_one({'_id': ObjectId(user_id)})
+    if not user:
+        return 'User not found', 404
+
+    # 사용자가 참여하는 이벤트의 포스트 ID 목록을 가져옵니다.
+    attending_event_ids = user.get('attending_events', [])
+
+    # 이벤트 ID 목록을 바탕으로 해당 포스트들을 조회합니다.
+    posts = list(posts_collection.find({'_id': {'$in': [ObjectId(post_id) for post_id in attending_event_ids]}}))
+
+    # 각 포스트의 추가적인 정보 변환 작업을 수행합니다.
+    for post in posts:
+        post['food_cat'] = translate_food_cat(post.get('food_cat'))
+        post['bobmate_cat'] = translate_bobmate_cat(post.get('bobmate_cat'))
+        post['current_post_attendees_count'] = len(post.get('attendees', []))
+
+    # 반환할 페이지에 필요한 데이터를 전달합니다.
+    return render_template('mypage.html', user=user, posts=posts)
+# def mypage(user_id):
     
-    post = posts_collection.find_one({'author_email': user['email']})
+#     user = users_collection.find_one({'_id': ObjectId(user_id)})
+    
+#     post = posts_collection.find_one({'author_email': user['email']})
 
-    if post is None:
-        return render_template('mypage.html', user=user, post=None)
+#     if post is None:
+#         return render_template('mypage.html', user=user, post=None)
 
-    post['food_cat'] = translate_food_cat(post.get('food_cat'))
-    post['current_post_attendees_count'] = len(post.get('attendees'))
+#     post['food_cat'] = translate_food_cat(post.get('food_cat'))
+#     post['current_post_attendees_count'] = len(post.get('attendees'))
 
 
-    return render_template('mypage.html', user=user, post=post)
+#     return render_template('mypage.html', user=user, post=post)
 
 def translate_food_cat(food_cat):
     if food_cat == 'chi':
@@ -731,8 +752,12 @@ def post():
 
         if email:
             user = users_collection.find_one({'email': email})
+            print(user['_id'])
             author_email = user['email']
             post_id = posts_collection.insert_one({'title': title, 'content': content, 'author_email': author_email,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People, 'current_post_attendees_count':current_post_attendees_count, 'attendees':[]  }).inserted_id
+            print(post_id)
+            users_collection.update_one({'_id': user['_id']}, {'$addToSet': {'attending_events': post_id}})
+            user['attending']
             return redirect(url_for('post_detail', post_id=post_id))
         else:
             flash('로그인이 만료 되었습니다')
