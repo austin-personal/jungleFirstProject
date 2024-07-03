@@ -154,7 +154,8 @@ def get_posts():
                         'date': post.get('date'),
                         'time': post.get('time'),
                         'open_chat': post.get('open_chat'),
-                        'max_People': post.get('max_People')
+                        'max_People': post.get('max_People'),
+                        'current_post_attendees_count': len(post.get('current_post_attendees_count'))
                     })
                 #참가자 다 찼을시 로드 안함
                 
@@ -214,6 +215,24 @@ def post():
     return render_template('post.html')
 
 
+# 포스팅 수정 페이지로 이동
+@app.route('/post/<post_id>/edit', methods=['GET'])
+def edit_post(post_id):
+    email = session.get('email')
+    if not email:
+        return redirect(url_for('login'))
+
+    post = posts_collection.find_one({'_id': ObjectId(post_id), 'author_email': email})
+    if not post:
+        return render_template('error.html', message='Unauthorized access or post not found')
+
+    post['food_cat'] = translate_food_cat(post.get('food_cat'))
+    post['bobmate_cat'] = translate_bobmate_cat(post.get('bobmate_cat'))
+
+    return render_template('update.html', post=post)
+
+
+
 # 포스팅 업데이트
 @app.route('/post/<post_id>/update', methods=['POST'])
 def update_post(post_id):
@@ -232,16 +251,25 @@ def update_post(post_id):
         date = request.form.get('date')
         time = request.form.get('time')
         open_chat = request.form.get('open_chat')
+        max_People = request.form.get('max_People')
 
+        #기존 데이터에서 가져오는 정보
+        pre_post = posts_collection.find_one({'_id': ObjectId(post_id)})
+        author_email =  pre_post['author_email']
+        
+        current_post_attendees_count = pre_post['current_post_attendees_count']
         # Update the post in the database
         updated_post = {
             'title': title,
             'content': content,
+            'author_email' : author_email,
             'bobmate_cat': bobmate_cat,
             'food_cat': food_cat,
             'date': date,
             'time': time,
-            'open_chat': open_chat
+            'open_chat': open_chat,
+            'max_People':max_People,
+            'current_post_attendees_count': current_post_attendees_count
         }
 
         # Perform the update operation
