@@ -3,9 +3,15 @@ from pymongo import MongoClient
 from bson import ObjectId
 import bcrypt
 from flask import flash
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
+
+# Current Time
+def get_current_time():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 # MongoDB 연결 설정
@@ -83,7 +89,6 @@ def get_posts():
     if request.method == 'POST':
         sort_food = request.form.get('sort_food')
         sort_bobmate = request.form.get('sort_bobmate')
-        print("{}  {}".format(sort_food, sort_bobmate))
         # 카테고리 딕셔너리
         food_category_map = {
             'chi': '중식',
@@ -102,23 +107,42 @@ def get_posts():
         food_category = food_category_map.get(sort_food, None)
         mate_category = mate_category_map.get(sort_bobmate, None)
         print(food_category, mate_category)
+        
+        # 전체 선택시 모든 포스트 디비 가져오기
+        query = {}
+        if sort_food != 'all':
+            query['food_cat'] = sort_food
+        if sort_bobmate != 'all':
+            query['bobmate_cat'] = sort_bobmate
+        print(query)
+        
         # 조회 수행
         if food_category and mate_category:
-            posts = posts_collection.find({'food_cat': sort_food, 'bobmate_cat': sort_bobmate})
-            
+            posts = posts_collection.find(query)
+            print(posts)
             for post in posts:
-                posts_data.append({
-                    'id': str(post['_id']),
-                    'title': post['title'],
-                    'content': post['content'],
-                    'author_email': post['author_email'],
-                    'bobmate_cat': post.get('bobmate_cat'),
-                    'food_cat': translate_food_cat(post.get('food_cat')),
-                    'date': post.get('date'),
-                    'time': post.get('time'),
-                    'open_chat': post.get('open_chat'),
-                    'max_People': post.get('max_People')
-                })
+                # 기간 만료시 포스트 데이터 로드 안함
+                p_date = post['date']
+                p_time = post['time']
+                p_datetime_str = f"{p_date} {p_time}"
+                p_datetime = datetime.strptime(p_datetime_str, "%Y-%m-%d %H:%M")
+                print(p_datetime)
+                if get_current_time() > p_datetime_str:
+                    print("기간만료")
+                    continue
+                else: 
+                    posts_data.append({
+                        'id': str(post['_id']),
+                        'title': post['title'],
+                        'content': post['content'],
+                        'author_email': post['author_email'],
+                        'bobmate_cat': post.get('bobmate_cat'),
+                        'food_cat': translate_food_cat(post.get('food_cat')),
+                        'date': post.get('date'),
+                        'time': post.get('time'),
+                        'open_chat': post.get('open_chat'),
+                        'max_People': post.get('max_People')
+                    })
 
             print(posts_data)
     return render_template('posts.html', posts_data=posts_data)
