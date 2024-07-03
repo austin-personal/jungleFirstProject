@@ -35,9 +35,6 @@
             justify-content: space-between;
             width: 100%;
         }
-        .Title {
-            font-size: 30px;
-        }
         .Horizontal{
             width: auto;
             display: flex;
@@ -87,6 +84,21 @@
         .card:hover {
             cursor: pointer;
         }
+
+        /* 타이틀 로고 스타일 */
+        .Title {
+            text-decoration: none;
+            font-size: 30px;
+            color:inherit;
+        }
+        .Title:hover {
+            cursor: pointer;
+            text-decoration: none;
+            color:inherit;
+        }
+        /* 타이틀 로고 스타일 */
+
+
     </style>
     
 
@@ -100,13 +112,11 @@
 <body>
     <div class="wrap">
         <div class="Logo">
-            <h1 class="Title">BOB Mate</h1>
-
-            
+            <h1><a href="/posts" class="Title">BOB Mate</a></h1>
         </div>
         <hr class="LogoLine">
 
-        <form action="/post" method="post">
+        <form action="/post/{{ post._id }}/update" method="post">
             <div id="post-box" class="form-post">
                 <div class="form-group">
                     <label for="post-url">포스트 제목</label>
@@ -120,15 +130,16 @@
                 </select>
                 <h1></h1>
                 <div class="Horizontal">
-                    <label for="options">음식 카테고리</label>
-                    <select id="options" name="food_cat">
-                        <option value="kor">한식</option>
-                        <option value="jap">일식</option>
-                        <option value="chi">중식</option>
-                        <option value="ame">양식</option>
-                    </select>
+                    <div>
+                        <label for="options">음식 카테고리</label>
+                        <select id="options" name="food_cat">
+                            <option value="kor">한식</option>
+                            <option value="jap">일식</option>
+                            <option value="chi">중식</option>
+                            <option value="ame">양식</option>
+                        </select>
+                    </div>
                     <input id="post-url" placeholder="최대 인원" name="max_People" class="form-control maxPeople" placeholder="">
-
                 </div>
                 <h1></h1>
                 <div class="Horizontal">
@@ -154,9 +165,7 @@
                 </div>
 
                 <div class="Horizontal">
-                    <form action="">
-                        <button type="submit" class="btn btn-danger">취소</button>
-                    </form>
+                    <a href="/posts/{{ post._id }}"  class="btn btn-danger">취소</a>
                     <button type="submit" class="btn btn-success">등록</button>
                 </div>
             </div>
