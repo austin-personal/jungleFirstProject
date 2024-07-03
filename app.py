@@ -8,13 +8,13 @@ from flask_socketio import SocketIO, join_room, leave_room, send
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
-socketio = SocketIO(app, cors_allowed_origins="*")
 
+
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Current Time
 def get_current_time():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
 
 # MongoDB 연결 설정
 client = MongoClient('localhost', 27017)
@@ -60,8 +60,6 @@ def register():
 
             session['email'] = email  # 회원가입 후 자동으로 로그인 처리
             return redirect(url_for('get_posts'))
-        
-        
 
     return render_template('register.html')
 
@@ -88,9 +86,6 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('home')) 
- 
-
-
 
 # 포스트 디비에서 가져오기
 @app.route('/posts', methods=['GET', 'POST'])
@@ -160,48 +155,6 @@ def get_posts():
                 #참가자 다 찼을시 로드 안함
                 
             print(posts_data)
-    else:
-        food_category = '전체'
-        mate_category = '전체'
-
-        query = {}
-        print(query)
-        
-        # 조회 수행
-        if food_category and mate_category:
-            posts = posts_collection.find(query)
-            print(posts)
-            for post in posts:
-                # 기간 만료시 포스트 데이터 로드 안함
-                p_date = post['date']
-                p_time = post['time']
-                p_datetime_str = f"{p_date} {p_time}"
-                p_datetime = datetime.strptime(p_datetime_str, "%Y-%m-%d %H:%M")
-                print(p_datetime)
-                if get_current_time() > p_datetime_str:
-                    print("기간만료")
-                    continue
-                elif post['current_post_attendees_count'] == post['max_People']:
-                    print("인원 충족")
-                    continue
-                else: 
-                    posts_data.append({
-                        'id': str(post['_id']),
-                        'title': post['title'],
-                        'content': post['content'],
-                        'author_email': post['author_email'],
-                        'bobmate_cat': post.get('bobmate_cat'),
-                        'food_cat': translate_food_cat(post.get('food_cat')),
-                        'date': post.get('date'),
-                        'time': post.get('time'),
-                        'open_chat': post.get('open_chat'),
-                        'max_People': post.get('max_People'),
-                        'current_post_attendees_count': len(post.get('attendees'))
-                    })
-                #참가자 다 찼을시 로드 안함
-                
-
-
     return render_template('posts.html', posts_data=posts_data)
 
 # 포스팅 상세 페이지
@@ -227,7 +180,6 @@ def post_detail(post_id):
     # Pass post data to the template for rendering
     return render_template('post_detail.html', post=post, user=user)
 
-
 # 포스팅 작성
 @app.route('/post', methods=['GET', 'POST'])
 def post():
@@ -248,16 +200,13 @@ def post():
         if email:
             user = users_collection.find_one({'email': email})
             author_email = user['email']
-            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author_email': author_email,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People, 'current_post_attendees_count':current_post_attendees_count}).inserted_id
-            # 새 포스트 만들 때 참가자 목록에 주최자도 포함
-            posts_collection.update_one({'_id': post_id}, {'$addToSet': {'attendees': user['email']}})
+            post_id = posts_collection.insert_one({'title': title, 'content': content, 'author_email': author_email,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People, 'current_post_attendees_count':current_post_attendees_count, 'attendees':[]  }).inserted_id
             return redirect(url_for('post_detail', post_id=post_id))
         else:
             flash('로그인이 만료 되었습니다')
             return redirect(url_for('login'))
 
     return render_template('post.html')
-
 
 # 포스팅 수정 페이지로 이동
 @app.route('/post/<post_id>/edit', methods=['GET'])
@@ -274,8 +223,6 @@ def edit_post(post_id):
     post['bobmate_cat'] = translate_bobmate_cat(post.get('bobmate_cat'))
 
     return render_template('update.html', post=post)
-
-
 
 # 포스팅 업데이트
 @app.route('/post/<post_id>/update', methods=['POST'])
@@ -329,7 +276,6 @@ def update_post(post_id):
 
     return redirect(url_for('get_posts'))  # Redirect to home if not a POST request
 
-
 # 포스팅 삭제
 @app.route('/post/<post_id>/delete', methods=['POST'])
 def delete_post(post_id):
@@ -355,9 +301,6 @@ def delete_post(post_id):
 
     return redirect(url_for('get_posts'))  # Redirect to home if not a POST request
 
-
-
-
 # 사용자 참석 여부 업데이트
 @app.route('/post/<post_id>/attend', methods=['POST'])
 def update_attendance(post_id):
@@ -381,6 +324,37 @@ def update_attendance(post_id):
     return redirect(url_for('post_detail', post_id=post_id, user=user))
 
 
+### TEST chat room redirect
+@app.route('/chat')
+def chat():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    
+    room = request.args.get('room')
+    username = session['email']
+    return render_template('chat.html', room=room, username=username)
+
+
+# WebSocket Chat Functionality
+@socketio.on('join')
+def on_join(data):
+    username = data['username']
+    room = data['room']
+    join_room(room)
+    send(username + ' has entered the room.', to=room)
+
+@socketio.on('leave')
+def on_leave(data):
+    username = data['username']
+    room = data['room']
+    leave_room(room)
+    send(username + ' has left the room.', to=room)
+
+@socketio.on('message')
+def handle_message(data):
+    room = data['room']
+    send(data['message'], to=room)
+
 def translate_food_cat(food_cat):
     if food_cat == 'chi':
         return '중식'
@@ -401,6 +375,5 @@ def translate_bobmate_cat(bobmate_cat):
     elif bobmate_cat == 'all':
         return '전체'
 
-
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5002, debug=True)
+    socketio.run(app, host='0.0.0.0', port=5002, debug=True)
