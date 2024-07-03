@@ -39,6 +39,16 @@
     display: flex;
     justify-content: space-between;
 }
+
+.Horizontal-space{
+    margin-right:10px;
+}
+
+.Horizontal-space-plus{
+    margin-right:10px;
+    padding-top: 7.5px;
+}
+
 .FullWidth{
     width: auto;
 }
@@ -101,6 +111,11 @@
     cursor: pointer;
 }
 
+.Vertical{
+    display:flex;
+    flex-direction: column;
+}
+
     </style>
 
     <script> 
@@ -118,10 +133,16 @@
                 <h1 onclick="this.form.submit()" class="Title">BOB Mate</h1>
             </form>
             
-            <form action = "/mypage/{{ user._id }}" method = "GET">
-                <button type = "submit" class = "btn btn-primary">마이페이지</button>
-            </form>
-            
+            <div class = "Horizontal">
+                <div class = "Horizontal-space-plus">
+                    안녕하세요! {{user.username}} 님
+                </div>
+
+                <form action = "/mypage/{{ user._id }}" method = "GET">
+                    <button type = "submit" class = "btn btn-primary">마이페이지</button>
+                </form>
+            </div>
+
         </div>
         <hr class="LogoLine">
 
@@ -153,7 +174,13 @@
                         <div class="card-body">
                             <div class="Horizontal">
                                 <p class="card-title comment">{{ post.title }}</p>
-                                <h5 href="#" class="card-text">{{ post.food_cat }}</h5>
+                                
+                                <div class = "Horizontal">
+                                    <h5 href="#" class="card-text Horizontal-space">{{ post.food_cat }}</h5>
+                                    <h5 class = "Horizontal-space">/</h5>
+                                    <h5 href="#" class="card-text">{{ post.bobmate_cat }}</h5>
+                                </div>
+                                
                             </div>
                             <div class="Horizontal">
                                 <p class="card-text">{{ post.content }}</p>     

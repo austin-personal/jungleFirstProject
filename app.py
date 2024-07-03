@@ -250,7 +250,7 @@ def get_posts():
                         'title': post['title'],
                         'content': post['content'],
                         'author_email': post['author_email'],
-                        'bobmate_cat': post.get('bobmate_cat'),
+                        'bobmate_cat': translate_bobmate_cat(post.get('bobmate_cat')),
                         'food_cat': translate_food_cat(post.get('food_cat')),
                         'date': post.get('date'),
                         'time': post.get('time'),
