@@ -329,7 +329,7 @@ def post():
             author_email = user['email']
             post_id = posts_collection.insert_one({'title': title, 'content': content, 'author_email': author_email,'bobmate_cat':bobmate_cat,'food_cat':food_cat,'date':date,'time':time,'open_chat':open_chat, 'max_People':max_People, 'current_post_attendees_count':current_post_attendees_count}).inserted_id
             # 새 포스트 만들 때 참가자 목록에 주최자도 포함
-            users_collection.update_one({'_id': post_id}, {'$addToSet': {'attending_events': post_id}})
+            users_collection.update_one({'_id': user['_id']}, {'$addToSet': {'attending_events': post_id}})
             posts_collection.update_one({'_id': post_id}, {'$addToSet': {'attendees': user['email']}})
             return redirect(url_for('post_detail', post_id=post_id))
         else:
