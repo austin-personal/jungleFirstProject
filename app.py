@@ -178,7 +178,7 @@ def post_detail(post_id):
         return 'Post not found', 404
     
     # Pass post data to the template for rendering
-    return render_template('post_detail.html', post=post, user=user)
+    return render_template('post_detail.html', post=post, user=user, isAttendee=True)
 
 # 포스팅 작성
 @app.route('/post', methods=['GET', 'POST'])
