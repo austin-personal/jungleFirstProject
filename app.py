@@ -58,8 +58,8 @@ def register():
             }
             users_collection.insert_one(user_data)
 
-        session['email'] = email  # 회원가입 후 자동으로 로그인 처리
-        return redirect(url_for('get_posts'))
+            session['email'] = email  # 회원가입 후 자동으로 로그인 처리
+            return redirect(url_for('get_posts'))
         
         
 
