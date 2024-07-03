@@ -118,7 +118,7 @@
             <h2>Chat Room</h2>
             <div id="chat-messages"></div>
             <div id="chat-buttons">
-                <input type="text" id="message-input" placeholder="메시지 입력...">
+                <input type="text" id="message-input" placeholder="메시지 입력..." >
                 <button id="send-button" onclick="sendMessage()">Send</button>
 
             </div>
@@ -147,13 +147,13 @@
             var messageDiv = document.createElement('div');
             messageDiv.classList.add('message');
 
-            if (msg.startsWith(username)) {
+            if (msg.username === username) {
                 messageDiv.classList.add('user-message');
             } else {
                 messageDiv.classList.add('other-message');
             }
 
-            messageDiv.textContent = msg;
+            messageDiv.textContent = msg.username + ': ' + msg.message + ' (' + msg.timestamp + ')';
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;  // Auto-scroll to the bottom
         });
@@ -180,6 +180,12 @@
         window.onbeforeunload = function() {
             socket.emit('leave', {'username': username, 'room': room});
         };
+
+        document.getElementById('message-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
     </script>
 
 </body>
