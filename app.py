@@ -3,9 +3,15 @@ from pymongo import MongoClient
 from bson import ObjectId
 import bcrypt
 from flask import flash
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
+
+# Current Time
+def get_current_time():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 # MongoDB 연결 설정
@@ -113,18 +119,26 @@ def get_posts():
             posts = posts_collection.find({'food_cat': sort_food, 'bobmate_cat': sort_bobmate})
             
             for post in posts:
-                posts_data.append({
-                    'id': str(post['_id']),
-                    'title': post['title'],
-                    'content': post['content'],
-                    'author_email': post['author_email'],
-                    'bobmate_cat': post.get('bobmate_cat'),
-                    'food_cat': translate_food_cat(post.get('food_cat')),
-                    'date': post.get('date'),
-                    'time': post.get('time'),
-                    'open_chat': post.get('open_chat'),
-                    'max_People': post.get('max_People')
-                })
+                # 기간 만료시 포스트 데이터 로드 안함
+                p_date = post['date']
+                p_time = post['time']
+                p_datetime_str = f"{p_date} {p_time}"
+                p_datetime = datetime.strptime(p_datetime_str, "%Y-%m-%d %H:%M")
+                if get_current_time() > p_datetime_str:
+                    continue
+                else: 
+                    posts_data.append({
+                        'id': str(post['_id']),
+                        'title': post['title'],
+                        'content': post['content'],
+                        'author_email': post['author_email'],
+                        'bobmate_cat': post.get('bobmate_cat'),
+                        'food_cat': translate_food_cat(post.get('food_cat')),
+                        'date': post.get('date'),
+                        'time': post.get('time'),
+                        'open_chat': post.get('open_chat'),
+                        'max_People': post.get('max_People')
+                    })
 
             print(posts_data)
     return render_template('posts.html', posts_data=posts_data)
