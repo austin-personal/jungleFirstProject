@@ -153,7 +153,7 @@
                 messageDiv.classList.add('other-message');
             }
 
-            messageDiv.textContent = msg.username + ': ' + msg.message + ' (' + msg.timestamp + ')';
+            messageDiv.textContent = msg.username + ': ' + msg.message/* + ' (' + msg.timestamp + ')'*/;
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;  // Auto-scroll to the bottom
         });
