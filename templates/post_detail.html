@@ -352,7 +352,7 @@
                 </form>
                 {% else %}
                 <form action="/post/{{ post._id }}/attend" method="post">
-                  <button type="submit" class="btn btn-success" onclick="showAttendAlert()">참여</button>
+                  <button type="submit" class="btn btn-success" onclick="showAttendAlert()" {% if post.cur_attend_num >= post.max_People %} disabled {% endif %}>참여</button>
                 </form>
                 {% endif %}
 

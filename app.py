@@ -289,6 +289,7 @@ def post_detail(post_id):
     post['bobmate_cat'] = translate_bobmate_cat(post.get('bobmate_cat'))
     current_post_attendees_count = len(post.get('attendees', []))
     post['cur_attend_num'] = current_post_attendees_count
+    post['max_People'] = int(post.get('max_People'))
 
     user = users_collection.find_one({'email': post['author_email']})
 
